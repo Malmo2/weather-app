@@ -1,5 +1,6 @@
 import { getCity, getWeather } from "./js/weatherService.js";
 import { forecast } from "./7dayforecast/7dayforecast.js";
+import { addToHistory, getHistory } from "./js/searchHistory.js";
 
 const cont = document.createElement("div");
 const displayCity = document.createElement("h2");
@@ -16,7 +17,7 @@ const cityInput = document.getElementById("searchInput");
 // cityInput.placeholder = "Search for a city";
 
 // document.body.append(cityInput, btn, cont);
-document.body.append(cont); 
+document.body.append(cont);
 
 btn.addEventListener("click", async () => {
   try {
@@ -30,6 +31,7 @@ btn.addEventListener("click", async () => {
     displayHumid.textContent = `Humidity: ${conditions.humidity}%`;
     displayWindSpeed.textContent = `Wind speed: ${conditions.windSpeed} m/s`;
 
+    cont.innerHTML = ""; // Clear previous content
     cont.append(
       displayCity,
       displayCountry,
@@ -37,6 +39,10 @@ btn.addEventListener("click", async () => {
       displayHumid,
       displayWindSpeed
     );
+
+    addToHistory(data.city);
+
+    cityInput.value = "";
   } catch (err) {
     console.error("Could not fetch data", err.message);
   }
