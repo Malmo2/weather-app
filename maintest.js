@@ -8,6 +8,7 @@ import { fetchForecastByCoords } from "./7dayforecast/new7dayforecast.js";
 import { forecast } from "./7dayforecast/forecastView.js";
 
 
+
 const cont = document.createElement("div");
 const displayCity = document.createElement("h2");
 const displayCountry = document.createElement("h2");
@@ -15,11 +16,19 @@ const displayTemp = document.createElement("p");
 const displayHumid = document.createElement("p");
 const displayWindSpeed = document.createElement("p");
 
+const displayCity = document.getElementById('location');
+const displayTemp = document.getElementById('mainTemp');
+const displayHumid = document.getElementById("humidity");
+const displayWindSpeed = document.getElementById("windSpeed");
+const forecastContainer = document.querySelector('.center-column');
+
+
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
 
 
 document.body.append(cont);
+
 
 btn.addEventListener("click", async () => {
   try {
@@ -29,14 +38,16 @@ btn.addEventListener("click", async () => {
 
     const { conditions, dailyData } = await fetchForecastByCoords(city.lat, city.lon);
 
-    displayCity.textContent = `City: ${city.city}`;
-    displayCountry.textContent = `Country: ${city.country}`;
-    displayTemp.textContent = `Temp: ${conditions.temp}°C`;
-    displayHumid.textContent = `Humidity: ${conditions.humidity}%`;
-    displayWindSpeed.textContent = `Wind speed: ${conditions.windSpeed} m/s`;
+    displayCity.textContent = `${city.city}, ${city.country}`;
+    displayTemp.textContent = `${conditions.temp}°C`;
+    displayHumid.textContent = `${conditions.humidity}%`;
+    displayWindSpeed.textContent = `${conditions.windSpeed} Km/h`;;
 
 
     const forecastElement = forecast(dailyData);
+    forecastContainer.innerHTML = "";
+    forecastContainer.appendChild(forecastElement);
+
 
     cont.innerHTML = "";
 
@@ -52,7 +63,9 @@ btn.addEventListener("click", async () => {
     addToHistory(data.city);
 
     cityInput.value = "";
+
   } catch (err) {
     console.error("Could not fetch data", err.message);
   }
 });
+
