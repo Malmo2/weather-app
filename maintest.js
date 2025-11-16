@@ -1,6 +1,8 @@
 import { getCity } from "./js/weatherService.js";
 import { fetchForecastByCoords } from "./7dayforecast/new7dayforecast.js";
 import { forecast } from "./7dayforecast/forecastView.js";
+import "./js/clearHistory.js";
+
 
 const displayCity = document.getElementById('location');
 const displayTemp = document.getElementById('mainTemp');

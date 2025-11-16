@@ -1,23 +1,11 @@
-import { historyKey } from "./searchHistory.js";
+import { displayHistory } from "./searchHistory.js";
 
-// Function to klear the search history
-function clearSearchHistory() {
-  localStorage.removeItem(historyKey);
+const clearBtn = document.getElementById("clearHistoryBtn");
 
-  console.log("Search history cleared!");
-  alert("Search history cleared!");
+clearBtn.addEventListener("click", () => {
+  // Clear the history from localStorage
+  localStorage.removeItem("searchHistory");
 
-  // updates UI for display history
-  const historyList = document.getElementById("shistoryList");
-  if (historyList) {
-    historyList.innerHTML = "";
-  }
-}
-
-// Attach event listener to your button
-document.addEventListener("DOMContentLoaded", () => {
-  const clearBtn = document.getElementById("clearHistoryBtn");
-  if (clearBtn) {
-    clearBtn.addEventListener("click", clearSearchHistory);
-  }
+  // Update the history display
+  displayHistory();
 });
