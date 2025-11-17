@@ -3,6 +3,7 @@ import { fetchForecastByCoords } from "./7dayforecast/new7dayforecast.js";
 import { forecast } from "./7dayforecast/forecastView.js";
 import { addToHistory, displayHistory } from "./js/searchHistory.js";
 import { toTimeOnly } from "./js/utils/toTime.js";
+import { removeHistory } from "./js/clearHistory.js";
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
@@ -12,6 +13,7 @@ const forecastContainer = document.querySelector(".center-column");
 const getSunrise = document.getElementById('sunrise');
 const getSunset = document.getElementById('sunset');
 const errorMessageDiv = document.getElementById("errorMessage");
+
 
 
 
@@ -59,12 +61,16 @@ btn.addEventListener("click", async () => {
     addToHistory(city.city);
     displayHistory();
 
+
     cityInput.value = "";
   } catch (err) {
     console.error("Could not fetch data", err.message);
         showError(err.message); 
   }
 });
+
+displayHistory();
+removeHistory();
 
 cityInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {

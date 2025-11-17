@@ -27,6 +27,8 @@ export function addToHistory(city) {
 
     saveHistory(history); // Save updated history
     console.log("Current history:", history);
+
+    announceToScreenReader(`${city} added to search history`); // Announce to screen reader
   } catch (error) {
     // Catch any errors
     console.error("Couldn't add to history:", error.message);
@@ -34,10 +36,22 @@ export function addToHistory(city) {
 }
 
 export function displayHistory(onCityClick) {
-  const historyContainer = document.getElementById("historyList");
+  let historyContainer = document.getElementById("historyList");
   if (!historyContainer) {
-    return;
+
+    //remove this container after Benjame creates it in html.
+    historyContainer = document.createElement("div");
+    historyContainer.id = "searchHistory";
+
+    const searchDiv = document.querySelector(".searchBar");
+    if (searchDiv) {
+      searchDiv.after(historyContainer);
+    }
   }
+
+  historyContainer.setAttribute("role", "region"); // Accessibility role
+  historyContainer.setAttribute("aria-label", "Search History"); // Accessibility label
+
 
   const history = getHistory();
   historyContainer.innerHTML = "";
