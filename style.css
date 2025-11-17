@@ -183,6 +183,35 @@ body > * {
   gap: 12px;
 }
 
+.seven-day-forecast {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.forecast-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.forecast-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2933;
+}
+
+.forecast-subtitle {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.forecast-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .forecast-item {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
@@ -192,6 +221,49 @@ body > * {
   border-radius: 10px;
   background-color: #f8fafc;
   font-size: 14px;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.forecast-day-name {
+  font-weight: 600;
+  color: #1f2933;
+}
+
+.forecast-date {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.forecast-summary {
+  display: flex;
+  justify-content: center;
+}
+
+.forecast-summary img {
+  width: 44px;
+  height: 44px;
+}
+
+.forecast-range {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: #1f2933;
+}
+
+.forecast-range .temp-max {
+  font-weight: 600;
+}
+
+.forecast-range .temp-min {
+  color: #64748b;
+  font-weight: 500;
 }
 
 .history-card {
