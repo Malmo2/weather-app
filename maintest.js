@@ -8,6 +8,7 @@ const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
 const displayHumid = document.getElementById("humidity");
 const displayWindSpeed = document.getElementById("windSpeed");
+const mainWeatherIcon = document.getElementById("mainWeatherIcon");
 const forecastContainer = document.querySelector(".center-column");
 
 const btn = document.getElementById("searchBtn");
@@ -27,9 +28,14 @@ btn.addEventListener("click", async () => {
     );
 
     displayCity.textContent = `${city.city}, ${city.country}`;
-    displayTemp.textContent = `${conditions.temp}°C`;
-    displayHumid.textContent = `${conditions.humidity}%`;
-    displayWindSpeed.textContent = `${conditions.windSpeed} Km/h`;
+    displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
+    displayHumid.textContent = `${Math.round(conditions.humidity)}%`;
+    displayWindSpeed.textContent = `${Math.round(conditions.windSpeed)} km/h`;
+    const iconClass = conditions.icon ?? "fa-sun";
+    const iconLabel = conditions.iconLabel ?? "Current weather";
+    mainWeatherIcon.className = `main-weather-icon fa-solid ${iconClass}`;
+    mainWeatherIcon.setAttribute("aria-label", iconLabel);
+    mainWeatherIcon.setAttribute("title", iconLabel);
 
     const forecastElement = forecast(dailyData);
     forecastContainer.innerHTML = "";

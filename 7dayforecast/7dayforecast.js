@@ -1,15 +1,30 @@
 import { getWeather } from "../js/weatherService.js";
 
+const WEATHER_ICON_MAP = [
+  { codes: [0], icon: "fa-sun", label: "Clear sky" },
+  { codes: [1, 2], icon: "fa-cloud-sun", label: "Partly cloudy" },
+  { codes: [3], icon: "fa-cloud", label: "Overcast" },
+  { codes: [45, 48], icon: "fa-smog", label: "Foggy" },
+  { codes: [51, 53, 55, 56, 57], icon: "fa-cloud-rain", label: "Drizzle" },
+  { codes: [61, 63, 65, 80, 81, 82], icon: "fa-cloud-showers-heavy", label: "Rain" },
+  { codes: [66, 67], icon: "fa-cloud-meatball", label: "Freezing rain" },
+  { codes: [71, 73, 75, 85, 86], icon: "fa-snowflake", label: "Snow" },
+  { codes: [95, 96, 99], icon: "fa-cloud-bolt", label: "Thunderstorm" },
+];
+
+const DEFAULT_ICON = { icon: "fa-sun", label: "Clear sky" };
+
 export function getWeatherIcon(code) {
-  if (code === 0) return "01d";
-  if (code === 1 || code === 2) return "02d";
-  if (code === 3) return "03d";
-  if (code === 45 || code === 48) return "50d";
-  if (code === 51 || code === 53 || code === 55) return "09d";
-  if (code === 61 || code === 63 || code === 65) return "10d";
-  if (code === 71 || code === 73 || code === 75) return "13d";
-  if (code === 95 || code === 96 || code === 99) return "11d";
-  return "01d";
+  const numericCode = Number(code);
+  if (Number.isNaN(numericCode)) {
+    return DEFAULT_ICON;
+  }
+
+  const mapping =
+    WEATHER_ICON_MAP.find(({ codes }) => codes.includes(numericCode)) ??
+    DEFAULT_ICON;
+
+  return mapping;
 }
 
 export function buildDailyDataFromOpenMeteo(daily) {
@@ -20,13 +35,11 @@ export function buildDailyDataFromOpenMeteo(daily) {
     const maxTemp = daily.temperature_2m_max[i];
     const minTemp = daily.temperature_2m_min[i];
     const weatherCode = daily.weathercode[i];
-    const icon = getWeatherIcon(weatherCode);
+    const { icon, label } = getWeatherIcon(weatherCode);
     out.push({
       dt: timestamp,
       temp: { max: maxTemp, min: minTemp, day: maxTemp },
-      weather: [
-        { description: `Max ${maxTemp}°C / Min ${minTemp}°C`, icon },
-      ],
+      weather: [{ description: label, icon }],
     });
   }
   return out;
@@ -35,6 +48,10 @@ export function buildDailyDataFromOpenMeteo(daily) {
 export async function fetchForecastByCoords(lat, lon) {
   const conditions = await getWeather(lat, lon);
   const dailyData = buildDailyDataFromOpenMeteo(conditions.daily);
-  return { conditions, dailyData };
+  const { icon, label } = getWeatherIcon(conditions.weatherCode);
+  return {
+    conditions: { ...conditions, icon, iconLabel: label },
+    dailyData,
+  };
 }
 

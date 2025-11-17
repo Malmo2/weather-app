@@ -32,8 +32,8 @@ export function forecast(dailyData = []) {
       month: "short",
     });
 
-    const icon = day.weather?.[0]?.icon ?? "01d";
-    const desc = day.weather?.[0]?.description ?? "weather icon";
+    const iconClass = day.weather?.[0]?.icon ?? "fa-sun";
+    const desc = day.weather?.[0]?.description ?? "Weather";
 
     const maxTempRaw =
       day.temp?.max ?? day.temp?.day ?? day.temp?.eve ?? day.temp ?? 0;
@@ -48,7 +48,7 @@ export function forecast(dailyData = []) {
         <span class="forecast-date">${dateLabel}</span>
       </div>
       <div class="forecast-summary">
-        <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${desc}">
+        <i class="forecast-icon fa-solid ${iconClass}" role="img" aria-label="${desc}" title="${desc}"></i>
       </div>
       <div class="forecast-range">
         <span class="temp-max">Max ${maxTemp}°C</span>

@@ -42,7 +42,8 @@ export async function getWeather(lat, lon) {
     const windSpeed = data.current.wind_speed_10m;
     const sunrise = data.daily.sunrise;
     const sunset = data.daily.sunset;
+    const weatherCode = data.current.weather_code;
 
 
-    return { latitude, longitude, temp, humidity, windSpeed, daily: data.daily, sunrise, sunset };
+    return { latitude, longitude, temp, humidity, windSpeed, daily: data.daily, sunrise, sunset, weatherCode };
 }
