@@ -35,11 +35,13 @@ export function buildDailyDataFromOpenMeteo(daily) {
     return out;
 }
 
+
 export async function fetchForecastByCoords(lat, lon) {
     const conditions = await getWeather(lat, lon);
     const dailyData = buildDailyDataFromOpenMeteo(conditions.daily);
     const sunrise = conditions.sunrise ? conditions.sunrise[0] : null;
     const sunset = conditions.sunset ? conditions.sunset[0] : null;
+
 
     return { conditions, dailyData, sunrise, sunset };
 }

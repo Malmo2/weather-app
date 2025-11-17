@@ -36,7 +36,7 @@ export function addToHistory(city) {
 }
 
 export function displayHistory(onCityClick) {
-  const historyContainer = document.getElementById("historyList");
+  let historyContainer = document.getElementById("historyList");
   if (!historyContainer) {
 
     //remove this container after Benjame creates it in html.
@@ -52,13 +52,6 @@ export function displayHistory(onCityClick) {
   historyContainer.setAttribute("role", "region"); // Accessibility role
   historyContainer.setAttribute("aria-label", "Search History"); // Accessibility label
 
-  if (history.length === 0) {
-    // No history. length check
-    historyContainer.innerHTML =
-      '<p class="no-history">No search history yet</p>';
-
-    return;
-  }
 
   const history = getHistory();
   historyContainer.innerHTML = "";
