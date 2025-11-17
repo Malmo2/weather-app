@@ -3,7 +3,6 @@ import { fetchForecastByCoords } from "./7dayforecast/new7dayforecast.js";
 import { forecast } from "./7dayforecast/forecastView.js";
 import { addToHistory, displayHistory } from "./js/searchHistory.js";
 import { toTimeOnly } from "./js/utils/toTime.js";
-import "./js/clearHistory.js"
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
