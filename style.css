@@ -62,6 +62,19 @@ body > * {
   height: 16px;
 }
 
+.error-message {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  border: 1px solid #fca5a5;
+  padding: 10px 16px;
+  border-radius: 12px;
+  margin: 12px auto;
+  max-width: 420px;
+  text-align: center;
+  font-size: 14px;
+  display: none; /* hidden by default */
+}
+
 /* Hero section */
 .hero-weather {
   display: flex;
@@ -254,15 +267,4 @@ body > * {
   }
 }
 
-.error-message {
-  color: #b91c1c;
-  background-color: #fee2e2;
-  border: 1px solid #fca5a5;
-  padding: 10px 16px;
-  border-radius: 12px;
-  margin: 12px auto;
-  max-width: 420px;
-  text-align: center;
-  font-size: 14px;
-  display: none; /* hidden by default */
-}
+
