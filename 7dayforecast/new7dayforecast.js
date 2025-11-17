@@ -13,7 +13,7 @@ export function getWeatherIcon(code) {
 }
 
 export function buildDailyDataFromOpenMeteo(daily) {
-    const out = [];
+    const dailyData = [];
     for (let i = 0; i < daily.time.length; i++) {
         const date = new Date(daily.time[i]);
         const timestamp = Math.floor(date.getTime() / 1000);
@@ -24,7 +24,7 @@ export function buildDailyDataFromOpenMeteo(daily) {
         const sunrise = daily.sunrise ? daily.sunrise[i] : null;
         const sunset = daily.sunset ? daily.sunset[i] : null;
 
-        out.push({
+        dailyData.push({
             dt: timestamp,
             temp: { day: maxTemp },
             weather: [{ description: `Max ${maxTemp}°C / Min ${minTemp}°C`, icon }],
@@ -32,7 +32,7 @@ export function buildDailyDataFromOpenMeteo(daily) {
             sunset
         });
     }
-    return out;
+    return dailyData;
 }
 
 
