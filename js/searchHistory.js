@@ -34,46 +34,33 @@ export function addToHistory(city) {
 }
 
 export function displayHistory(onCityClick) {
-  const history = getHistory();
-
-  let historyContainer = document.getElementById("searchHistory");
-
+  const historyContainer = document.getElementById("historyList");
   if (!historyContainer) {
-    //remove this container after Benjame creates it in html.
-    historyContainer = document.createElement("div");
-    historyContainer.id = "searchHistory";
-
-    const searchDiv = document.querySelector(".searchBar");
-    if (searchDiv) {
-      searchDiv.after(historyContainer);
-    }
-  }
-
-  if (history.length === 0) {
-    // No history. length check
-    historyContainer.innerHTML =
-      '<p class="no-history">No search history yet</p>';
     return;
   }
 
-  console.log("container:", historyContainer);
-  console.log("history:", history);
+  const history = getHistory();
+  historyContainer.innerHTML = "";
 
-  let html = "<h3>Recent Searches:</h3>"; // Header for history section
-  html += '<ul class="history-list">'; // Start ul tag
+  if (history.length === 0) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.className = "no-history";
+    emptyMessage.textContent = "No search history yet";
+    historyContainer.appendChild(emptyMessage);
+    return;
+  }
 
   history.forEach((city) => {
-    // Loop through each city in history
-    html += `
-    <li class="history-item"> 
-      <span class="city-name" data-city="${city}">${city}</span> 
-    </li>
-  `;
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "history-item";
+    item.dataset.city = city;
+    item.textContent = city;
+
+    if (typeof onCityClick === "function") {
+      item.addEventListener("click", () => onCityClick(city));
+    }
+
+    historyContainer.appendChild(item);
   });
-
-  html += "</ul>"; // Close the ul tag
-
-  historyContainer.innerHTML = html;
-
-  console.log("HTML skapad!");
 }
