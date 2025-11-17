@@ -3,6 +3,7 @@ import { fetchForecastByCoords } from "./7dayforecast/new7dayforecast.js";
 import { forecast } from "./7dayforecast/forecastView.js";
 import { addToHistory, displayHistory } from "./js/searchHistory.js";
 import { toTimeOnly } from "./js/utils/toTime.js";
+import "./js/clearHistory.js"
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
@@ -11,16 +12,29 @@ const displayWindSpeed = document.getElementById("windSpeed");
 const forecastContainer = document.querySelector(".center-column");
 const getSunrise = document.getElementById('sunrise');
 const getSunset = document.getElementById('sunset');
+const errorMessageDiv = document.getElementById("errorMessage");
+
 
 
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
 
+function showError(message) {
+  if (!errorMessageDiv) return;
+  errorMessageDiv.textContent = message;
+  errorMessageDiv.style.display = "block";
+}
 
+function clearError() {
+  if (!errorMessageDiv) return;
+  errorMessageDiv.textContent = "";
+  errorMessageDiv.style.display = "none";
+}
 
 displayHistory();
 
 btn.addEventListener("click", async () => {
+    clearError();
   try {
     const input = cityInput.value.trim();
     const city = await getCity(input);
@@ -49,6 +63,7 @@ btn.addEventListener("click", async () => {
     cityInput.value = "";
   } catch (err) {
     console.error("Could not fetch data", err.message);
+        showError(err.message); 
   }
 });
 

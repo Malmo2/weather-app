@@ -30,18 +30,27 @@ export async function getCity(name) {
 }
 
 export async function getWeather(lat, lon) {
+  try {
     const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`;
     const res = await fetch(weatherUrl);
-    if (!res.ok) throw new Error("Could not fetch data");
+
+    // If API returns an error
+    if (!res.ok) throw new Error("Weather data not available. Please try again later.");
+
     const data = await res.json();
-
-    const latitude = data.latitude;
-    const longitude = data.longitude;
-    const temp = data.current.temperature_2m;
-    const humidity = data.current.relative_humidity_2m;
-    const windSpeed = data.current.wind_speed_10m;
-    const sunrise = data.daily.sunrise;
-    const sunset = data.daily.sunset;
-
-    return { latitude, longitude, temp, humidity, windSpeed, daily: data.daily, sunrise, sunset };
+    return {
+      latitude: data.latitude,
+      longitude: data.longitude,
+      temp: data.current.temperature_2m,
+      humidity: data.current.relative_humidity_2m,
+      windSpeed: data.current.wind_speed_10m,
+      daily: data.daily,
+      sunrise: data.daily.sunrise,
+      sunset: data.daily.sunset
+    };
+  } catch (error) {
+    // Any network or fetch error gets caught here
+    throw new Error("Network error: Unable to fetch weather data");
+  }
 }
+
