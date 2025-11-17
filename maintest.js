@@ -43,3 +43,10 @@ btn.addEventListener("click", async () => {
     console.error("Could not fetch data", err.message);
   }
 });
+
+cityInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') {
+    btn.click()
+  }
+})
+
