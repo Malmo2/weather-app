@@ -29,15 +29,16 @@ export async function getCity(name) {
 
 
         result = data.results.find(c => c.country.toLowerCase().includes(finalCountry.toLowerCase())) || data.results[0];
-
-
-
         return { city: result.name, country: result.country, lat: result.latitude, lon: result.longitude };
+
+
     } catch (err) {
         console.error("Could not find data", err.message);
         return { city: null, country: null, lat: null, lon: null };
     }
 }
+
+
 export async function getWeather(lat, lon) {
 
 

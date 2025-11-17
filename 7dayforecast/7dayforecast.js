@@ -29,11 +29,16 @@ export function buildDailyDataFromOpenMeteo(daily) {
         const maxTemp = daily.temperature_2m_max[i];
         const minTemp = daily.temperature_2m_min[i];
         const weatherCode = daily.weathercode[i];
+        const sunrise = daily.sunrise ? daily.sunrise[i] : null;
+        const sunset = daily.sunset ? daily.sunset[i] : null;
         const { icon, label } = getWeatherIcon(weatherCode);
+
         out.push({
             dt: timestamp,
             temp: { max: maxTemp, min: minTemp, day: maxTemp },
             weather: [{ description: label, icon }],
+            sunset,
+            sunrise,
         });
     }
     return out;
@@ -42,8 +47,14 @@ export async function fetchForecastByCoords(lat, lon) {
     const conditions = await getWeather(lat, lon);
     const dailyData = buildDailyDataFromOpenMeteo(conditions.daily);
     const { icon, label } = getWeatherIcon(conditions.weatherCode);
+
+    const sunrise = conditions.sunrise ? conditions.sunrise[0] : null;
+    const sunset = conditions.sunset ? conditions.sunset[0] : null;
+
     return {
         conditions: { ...conditions, icon, iconLabel: label },
         dailyData,
+        sunrise,
+        sunset,
     };
 }
