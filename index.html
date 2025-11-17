@@ -10,7 +10,7 @@
 
 <body>
     <!-- Search Bar -->
-    <div class="searchBar">
+    <div class="searchBar" role = "search" aria-label="Weather search">
         <div class="gradient-shadow"></div>
         <input type="text" id="searchInput" placeholder="Enter a city..." aria-label="search city">
         <button id="searchBtn"><img src="images/search.png" alt="Search"></button>
@@ -19,8 +19,8 @@
     <section class="hero-weather">
         <img src="images/clouds.png" class="main-weather-icon" id="mainWeatherIcon" alt="Weather" />
         <h1 class="location" id="location">Malmö, Sweden</h1>
-        <div class="main-temp" id="mainTemp">9°C</div>
-        <div class="weather-stats">
+        <div class="main-temp" id="mainTemp" aria-label = "Current temperature">9°C</div>
+        <div class="weather-stats" role = "group" aria-label = "Weather details">
             <div class="stat-item">
                 <img src="images/humidity.png" alt="Humidity" class="stat-icon" />
                 <span id="humidity">89%</span>
@@ -41,25 +41,25 @@
                 <h3 class="card-title">Map</h3>
                 <div id="map" class="map-container"></div>
             </div>
-            <div class="sun-times-card">
+            <div class="sun-times-card" aria-labelledby="sunrise-heading">
                 <h3 class="card-title">Sunrise/Sunset</h3>
                 <div class="sun-time-row">
-                    <span class="sun-icon">Icon</span>
+                    <span class="sun-icon">☀️</span>
                     <span class="sun-label">Sunrise</span>
                     <span class="sun-value" id="sunrise">7:30</span>
                 </div>
             </div>
-            <div class="sun-times-card">
+            <div class="sun-times-card" aria-labelledby="sunset-heading">
                 <h3 class="card-title">Sunrise/Sunset</h3>
                 <div class="sun-time-row">
-                    <span class="sun-icon">Icon</span>
+                    <span class="sun-icon"> 🌙 </span>
                     <span class="sun-label">Sunset</span>
                     <span class="sun-value" id="sunset">16:08</span>
                 </div>
             </div>
         </section>
         <!--Center: 7-day forecast -->
-        <section class="center-column">
+        <section class="center-column" aria-labelledby="7-day forecast">
         </section>
         <!-- Right: Search History -->
         <section class="right-column">
