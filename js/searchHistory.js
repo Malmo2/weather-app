@@ -51,8 +51,8 @@ export function displayHistory(onCityClick) {
     }
   }
 
-historyContainer.setAttribute("role", "region");
-historyContainer.setAttribute("aria-label", "Search History");
+  historyContainer.setAttribute("role", "region"); // Accessibility role
+  historyContainer.setAttribute("aria-label", "Search History"); // Accessibility label
 
   if (history.length === 0) {
     // No history. length check
