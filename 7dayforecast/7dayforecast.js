@@ -1,4 +1,5 @@
 import { getWeather } from "../js/weatherService.js";
+
 const WEATHER_ICON_MAP = [
     { codes: [0], icon: "fa-sun", label: "Clear sky" },
     { codes: [1, 2], icon: "fa-cloud-sun", label: "Partly cloudy" },
@@ -10,12 +11,17 @@ const WEATHER_ICON_MAP = [
     { codes: [71, 73, 75, 85, 86], icon: "fa-snowflake", label: "Snow" },
     { codes: [95, 96, 99], icon: "fa-cloud-bolt", label: "Thunderstorm" },
 ];
+
+
 const DEFAULT_ICON = { icon: "fa-sun", label: "Clear sky" };
+
 export function getWeatherIcon(code) {
     const numericCode = Number(code);
     if (Number.isNaN(numericCode)) {
         return DEFAULT_ICON;
     }
+
+
     const mapping =
         WEATHER_ICON_MAP.find(({ codes }) => codes.includes(numericCode)) ??
         DEFAULT_ICON;
@@ -23,6 +29,8 @@ export function getWeatherIcon(code) {
 }
 export function buildDailyDataFromOpenMeteo(daily) {
     const out = [];
+
+
     for (let i = 0; i < daily.time.length; i++) {
         const date = new Date(daily.time[i]);
         const timestamp = Math.floor(date.getTime() / 1000);
@@ -44,8 +52,11 @@ export function buildDailyDataFromOpenMeteo(daily) {
     return out;
 }
 export async function fetchForecastByCoords(lat, lon) {
+
     const conditions = await getWeather(lat, lon);
+
     const dailyData = buildDailyDataFromOpenMeteo(conditions.daily);
+
     const { icon, label } = getWeatherIcon(conditions.weatherCode);
 
     const sunrise = conditions.sunrise ? conditions.sunrise[0] : null;

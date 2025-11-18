@@ -1,29 +1,43 @@
 export function createCities(cities) {
+
     const cont = document.getElementById("results");
-    cont.innerHTML = "";
 
     if (!cities || cities.length === 0) {
         cont.textContent = "No results found.";
         return;
     }
 
-    cities.forEach(city => {
-        const w = city.weather;
+    cont.innerHTML = "";
+
+
+    cities.forEach(c => {
+
+        const cityName = document.createElement('h3');
+        const cityCountry = document.createElement('h3');
+        const displayTemp = document.createElement('span');
+        const displayHumid = document.createElement('span');
+        const displayWind = document.createElement('span');
+
+
+
+        const w = c.weather;
 
         const card = document.createElement("div");
         card.classList.add("city-card");
 
-        card.innerHTML = `
-            <div class="city-name">${city.name}</div>
-            <div class="city-country">${city.country}</div>
+        cityName.textContent = `${c.name}`;
+        cityName.classList.add('city-name');
 
-            <div class="weather-info">
-                <span>Temperature: ${w.temperature}°C</span>
-                <span>Humidity: ${w.humidity}%</span>
-                <span>Wind: ${w.windSpeed} m/s</span>
-            </div>
-        `;
+        cityCountry.textContent = `${c.country}`;
+        cityCountry.classList.add('city-country');
 
+        displayTemp.textContent = `${w.temperature}`;
+
+        displayHumid.textContent = `${w.humidity}`;
+
+        displayWind.textContent = `${w.windSpeed}`;
+
+        card.append(cityName, cityCountry, displayTemp, displayHumid, displayWind);
         cont.appendChild(card);
     });
 }

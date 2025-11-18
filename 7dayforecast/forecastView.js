@@ -1,17 +1,25 @@
 export function forecast(dailyData = []) {
     const container = document.createElement("section");
     container.className = "seven-day-forecast";
+
     const header = document.createElement("div");
     header.className = "forecast-header";
+
     const title = document.createElement("h2");
     title.textContent = "7-day forecast";
+
     const subtitle = document.createElement("span");
     subtitle.className = "forecast-subtitle";
     subtitle.textContent = "Daily overview";
+
     header.append(title, subtitle);
     container.appendChild(header);
+
     const list = document.createElement("div");
     list.className = "forecast-list";
+
+
+
     dailyData.slice(0, 7).forEach((day, index) => {
         const item = document.createElement("article");
         item.className = "forecast-item";

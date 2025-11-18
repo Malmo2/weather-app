@@ -1,81 +1,69 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f4f4;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-#searchInput {
-    padding: 0.7rem 1rem;
-    border: 1px solid #ccc;
-    width: 250px;
-    border-radius: 6px;
-    font-size: 1rem;
-    outline: none;
-}
-
-#searchBtn {
-    padding: 0.7rem 1.2rem;
-    font-size: 1rem;
-    background: #0077ff;
-    border: none;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-#searchBtn:hover {
-    background: #005ccc;
-}
-
 #results {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    display: grid;
+    /* use CSS grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* responsive columns */
+    gap: 12px;
+    /* space between cards */
+    padding: 10px;
+    /* padding around grid */
+}
+
+#solarResults {
+    display: grid;
+    /* use CSS grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* responsive columns */
+    gap: 12px;
+    /* space between cards */
+    padding: 10px;
+    /* padding around grid */
 }
 
 .city-card {
-    background: white;
-    padding: 1rem 1.2rem;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    transition: 0.2s;
-}
-
-.city-card:hover {
-    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+    background-color: #f8f9fa;
+    /* light background */
+    border: 1px solid #ddd;
+    /* subtle border */
+    border-radius: 8px;
+    /* rounded corners */
+    padding: 10px;
+    /* content padding */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* light shadow */
+    font-size: 12px;
+    /* smaller text */
+    display: flex;
+    /* flexbox layout */
+    flex-direction: column;
+    /* vertical layout */
+    gap: 4px;
+    /* small gap between items */
+    min-height: 100px;
+    /* small fixed height */
 }
 
 .city-name {
-    font-size: 1.2rem;
+    font-size: 14px;
+    /* slightly bigger for title */
     font-weight: bold;
-    margin-bottom: 0.2rem;
+    /* bold city name */
+    margin: 0;
+    /* remove extra margin */
 }
 
 .city-country {
-    color: #777;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
+    font-size: 12px;
+    /* smaller country text */
+    color: #555;
+    /* subtle text color */
+    margin: -2px 0 4px 0;
+    /* tighten spacing */
 }
 
-.weather-info {
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-}
-
-.weather-info span {
-    color: #333;
+.city-card span {
+    display: block;
+    /* each stat on new line */
+    margin: 2px 0;
+    /* small spacing */
 }
