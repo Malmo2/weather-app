@@ -27,6 +27,8 @@ export function addToHistory(city) {
 
     saveHistory(history); // Save updated history
     console.log("Current history:", history);
+
+    announceToScreenReader(`${city} added to search history`); // Announce to screen reader
   } catch (error) {
     // Catch any errors
     console.error("Couldn't add to history:", error.message);
@@ -34,11 +36,9 @@ export function addToHistory(city) {
 }
 
 export function displayHistory(onCityClick) {
-  const history = getHistory();
-
-  let historyContainer = document.getElementById("searchHistory");
-
+  let historyContainer = document.getElementById("historyList");
   if (!historyContainer) {
+
     //remove this container after Benjame creates it in html.
     historyContainer = document.createElement("div");
     historyContainer.id = "searchHistory";
@@ -49,31 +49,32 @@ export function displayHistory(onCityClick) {
     }
   }
 
+  historyContainer.setAttribute("role", "region"); // Accessibility role
+  historyContainer.setAttribute("aria-label", "Search History"); // Accessibility label
+
+
+  const history = getHistory();
+  historyContainer.innerHTML = "";
+
   if (history.length === 0) {
-    // No history. length check
-    historyContainer.innerHTML =
-      '<p class="no-history">No search history yet</p>';
+    const emptyMessage = document.createElement("p");
+    emptyMessage.className = "no-history";
+    emptyMessage.textContent = "No search history yet";
+    historyContainer.appendChild(emptyMessage);
     return;
   }
 
-  console.log("container:", historyContainer);
-  console.log("history:", history);
-
-  let html = "<h3>Recent Searches:</h3>"; // Header for history section
-  html += '<ul class="history-list">'; // Start ul tag
-
   history.forEach((city) => {
-    // Loop through each city in history
-    html += `
-    <li class="history-item"> 
-      <span class="city-name" data-city="${city}">${city}</span> 
-    </li>
-  `;
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "history-item";
+    item.dataset.city = city;
+    item.textContent = city;
+
+    if (typeof onCityClick === "function") {
+      item.addEventListener("click", () => onCityClick(city));
+    }
+
+    historyContainer.appendChild(item);
   });
-
-  html += "</ul>"; // Close the ul tag
-
-  historyContainer.innerHTML = html;
-
-  console.log("HTML skapad!");
 }

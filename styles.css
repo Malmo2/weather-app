@@ -1,0 +1,69 @@
+#results {
+    display: grid;
+    /* use CSS grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* responsive columns */
+    gap: 12px;
+    /* space between cards */
+    padding: 10px;
+    /* padding around grid */
+}
+
+#solarResults {
+    display: grid;
+    /* use CSS grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* responsive columns */
+    gap: 12px;
+    /* space between cards */
+    padding: 10px;
+    /* padding around grid */
+}
+
+.city-card {
+    background-color: #f8f9fa;
+    /* light background */
+    border: 1px solid #ddd;
+    /* subtle border */
+    border-radius: 8px;
+    /* rounded corners */
+    padding: 10px;
+    /* content padding */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* light shadow */
+    font-size: 12px;
+    /* smaller text */
+    display: flex;
+    /* flexbox layout */
+    flex-direction: column;
+    /* vertical layout */
+    gap: 4px;
+    /* small gap between items */
+    min-height: 100px;
+    /* small fixed height */
+}
+
+.city-name {
+    font-size: 14px;
+    /* slightly bigger for title */
+    font-weight: bold;
+    /* bold city name */
+    margin: 0;
+    /* remove extra margin */
+}
+
+.city-country {
+    font-size: 12px;
+    /* smaller country text */
+    color: #555;
+    /* subtle text color */
+    margin: -2px 0 4px 0;
+    /* tighten spacing */
+}
+
+.city-card span {
+    display: block;
+    /* each stat on new line */
+    margin: 2px 0;
+    /* small spacing */
+}
