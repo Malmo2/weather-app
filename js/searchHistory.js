@@ -28,7 +28,6 @@ export function addToHistory(city) {
     saveHistory(history); // Save updated history
     console.log("Current history:", history);
 
-    
   } catch (error) {
     // Catch any errors
     console.error("Couldn't add to history:", error.message);
