@@ -15,5 +15,3 @@ export async function getPrecipitation() {
         console.error('Could not fetch precipitation', err.message);
     }
 }
-
-
