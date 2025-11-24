@@ -5,6 +5,7 @@ import { addToHistory, displayHistory } from "./js/searchHistory.js";
 import { removeHistory } from "./js/clearHistory.js";
 import { toTime } from './js/utils/toTime.js';
 import { initDarkMode } from './darkmode/darkmode.js';
+import { App } from "./Hourlyforecast/app.js"
 
 
 
@@ -24,6 +25,7 @@ const displaySunset = document.getElementById('sunset');
 displayHistory();
 removeHistory();
 initDarkMode();
+const hourlyApp = new App();
 
 
 btn.addEventListener("click", async () => {
@@ -35,6 +37,8 @@ btn.addEventListener("click", async () => {
       city.lat,
       city.lon
     );
+    
+    hourlyApp.render(conditions);
 
 
 
