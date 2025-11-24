@@ -18,6 +18,35 @@ body>* {
   width: 100%;
 }
 
+/* Dark Mode Toggle */
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background-color: #2563EB;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+#theme-toggle i {
+  font-size: 20px;
+}
+
 /* Search */
 .searchBar {
   position: relative;
@@ -69,12 +98,12 @@ body>* {
   align-items: center;
   text-align: center;
   gap: 20px;
-  background-color: #FFFFFF;
   border: 1px solid #D1D5DB;
   border-radius: 24px;
   padding: 40px 32px;
   margin-bottom: 32px;
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+  
 }
 
 .main-weather-icon {
@@ -321,6 +350,69 @@ body>* {
 .no-history {
   font-size: 14px;
   color: #64748B;
+}
+
+body.dark-mode {
+  background-color: #1A202C;
+  color: #F4F7FB;
+}
+
+.dark-mode .hero-weather,
+.dark-mode .map-card,
+.dark-mode .sun-times-card,
+.dark-mode .history-card,
+.dark-mode .center-column,
+.dark-mode .forecast-day,
+.dark-mode .forecast-item {
+  background-color: #2D3748;
+  border-color: #4A5568;
+  color: #F4F7FB;
+}
+
+.dark-mode #searchInput {
+  background-color: #2D3748;
+  border-color: #4A5568;
+  color: #F4F7FB;
+}
+
+.dark-mode #searchInput::placeholder {
+  color: #718096;
+}
+
+.dark-mode .card-title {
+  color: #F4F7FB;
+}
+
+.dark-mode .stat-label,
+.dark-mode .sun-label {
+  color: #CBD5E1;
+}
+
+.dark-mode .forecast-temp,
+.dark-mode .sun-value,
+.dark-mode .forecast-day-name,
+.dark-mode .forecast-header h2,
+.dark-mode .forecast-range {
+  color: #F4F7FB;
+}
+
+.dark-mode .forecast-date,
+.dark-mode .forecast-subtitle,
+.dark-mode .forecast-range .temp-min {
+  color: #94A3B8;
+}
+
+.dark-mode .history-item {
+  background-color: #4A5568;
+  color: #F4F7FB;
+}
+
+.dark-mode .no-history {
+  color: #94A3B8;
+}
+
+.dark-mode #theme-toggle {
+  background-color: #F59E0B;
 }
 
 /* Responsive */

@@ -4,6 +4,7 @@ import { forecast } from "./7dayforecast/forecastView.js";
 import { addToHistory, displayHistory } from "./js/searchHistory.js";
 import { removeHistory } from "./js/clearHistory.js";
 import { toTime } from './js/utils/toTime.js';
+import { initDarkMode } from './darkmode/darkmode.js';
 
 
 
@@ -22,6 +23,7 @@ const displaySunset = document.getElementById('sunset');
 
 displayHistory();
 removeHistory();
+initDarkMode();
 
 
 btn.addEventListener("click", async () => {
