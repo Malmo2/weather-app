@@ -27,6 +27,7 @@ export function addToHistory(city) {
 
     saveHistory(history); // Save updated history
     console.log("Current history:", history);
+
   } catch (error) {
     // Catch any errors
     console.error("Couldn't add to history:", error.message);
@@ -54,11 +55,9 @@ export function removeFromHistory(cityToRemove) {
 }
 
 export function displayHistory(onCityClick) {
-  const history = getHistory();
-
-  let historyContainer = document.getElementById("searchHistory");
-
+  let historyContainer = document.getElementById("historyList");
   if (!historyContainer) {
+
     //remove this container after Benjame creates it in html.
     historyContainer = document.createElement("div");
     historyContainer.id = "searchHistory";
@@ -72,17 +71,26 @@ export function displayHistory(onCityClick) {
   historyContainer.setAttribute("role", "region"); // Accessibility role
   historyContainer.setAttribute("aria-label", "Search History"); // Accessibility label
 
+
   // Clear container first
   historyContainer.innerHTML = "";
 
   if (history.length === 0) {
     // No history. length check
+
+
+  const history = getHistory();
+  historyContainer.innerHTML = "";
+
+  if (history.length === 0) {
+
     const emptyMessage = document.createElement("p");
     emptyMessage.className = "no-history";
     emptyMessage.textContent = "No search history yet";
     historyContainer.appendChild(emptyMessage);
     return;
   }
+
 
   console.log("container:", historyContainer);
   console.log("history:", history);
@@ -99,6 +107,9 @@ export function displayHistory(onCityClick) {
     itemWrapper.className = "history-item-wrapper";
 
     // City button
+
+  history.forEach((city) => {
+
     const item = document.createElement("button");
     item.type = "button";
     item.className = "history-item";
@@ -141,4 +152,7 @@ export function displayHistory(onCityClick) {
   });
 
   console.log("HTML skapad!");
+
+    historyContainer.appendChild(item);
+  });
 }

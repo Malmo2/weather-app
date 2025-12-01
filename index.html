@@ -4,31 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather station</title>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
 <body>
+
+    <button id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+    
     <!-- Search Bar -->
-    <div class="searchBar" role = "search" aria-label="Weather search">
-        <div class="gradient-shadow"></div>
+    <div class="searchBar" role="search" aria-label="Weather search">
         <input type="text" id="searchInput" placeholder="Enter a city..." aria-label="search city">
-        <button id="searchBtn"><img src="images/search.png" alt="Search"></button>
+        <button id="searchBtn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        </button>
     </div>
     <!-- Hero Weather Display -->
-    <section class="hero-weather">
-        <img src="images/clouds.png" class="main-weather-icon" id="mainWeatherIcon" alt="Weather" />
+    <section class="hero-weather" aria-live="polite">
+        <i class="main-weather-icon fa-solid fa-cloud-sun" id="mainWeatherIcon" role="img"
+            aria-label="Partly cloudy"></i>
+        <div class="main-temp" id="mainTemp" aria-label="Current temperature">9°C</div>
         <h1 class="location" id="location">Malmö, Sweden</h1>
-        <div class="main-temp" id="mainTemp" aria-label = "Current temperature">9°C</div>
-        <div class="weather-stats" role = "group" aria-label = "Weather details">
+        <div class="weather-stats" role="group" aria-label="Weather details">
             <div class="stat-item">
-                <img src="images/humidity.png" alt="Humidity" class="stat-icon" />
-                <span id="humidity">89%</span>
+                <i class="fa-solid fa-droplet stat-icon" aria-hidden="true"></i>
+                <span class="stat-value" id="humidity">89%</span>
                 <span class="stat-label">Humidity</span>
             </div>
             <div class="stat-item">
-                <img src="images/wind.png" alt="Wind" class="stat-icon" />
-                <span id="windSpeed">2Km/h</span>
+                <i class="fa-solid fa-wind stat-icon" aria-hidden="true"></i>
+                <span class="stat-value" id="windSpeed">2 km/h</span>
                 <span class="stat-label">Wind Speed</span>
             </div>
         </div>
@@ -44,7 +54,7 @@
             <div class="sun-times-card" aria-labelledby="sunrise-heading">
                 <h3 class="card-title">Sunrise/Sunset</h3>
                 <div class="sun-time-row">
-                    <span class="sun-icon">☀️</span>
+                    <i class="fa-solid fa-sun sun-icon" aria-hidden="true"></i>
                     <span class="sun-label">Sunrise</span>
                     <span class="sun-value" id="sunrise">7:30</span>
                 </div>
@@ -52,7 +62,7 @@
             <div class="sun-times-card" aria-labelledby="sunset-heading">
                 <h3 class="card-title">Sunrise/Sunset</h3>
                 <div class="sun-time-row">
-                    <span class="sun-icon"> 🌙 </span>
+                    <i class="fa-solid fa-moon sun-icon" aria-hidden="true"></i>
                     <span class="sun-label">Sunset</span>
                     <span class="sun-value" id="sunset">16:08</span>
                 </div>
@@ -64,6 +74,10 @@
         <!-- Right: Search History -->
         <section class="right-column">
             <div class="history-card">
+                <h3 class="card-title">Hourly Forecast</h3>
+                <div id="hours"></div>
+            </div>
+            <div class="history-card">
                 <h3 class="card-title">Search History</h3>
                 <button id="clearHistoryBtn" class="clear-btn">Clear History</button>
                 <div class="history-list" id="historyList">
@@ -72,7 +86,7 @@
             </div>
         </section>
     </div>
-    <script src="./maintest.js" type="module" defer></script>
+    <script src="maintest.js" type="module" defer></script>
 </body>
 
 </html>

@@ -10,13 +10,15 @@ export async function getCity(name) {
 
 
 
+
         if (!res.ok) throw new Error("Could not fetch data");
         const data = await res.json();
+
+
+
         if (!data.results || data.results.length === 0) {
             return { city: null, country: null, lat: null, lon: null };
         }
-
-
         let result;
 
 
@@ -27,9 +29,8 @@ export async function getCity(name) {
 
 
         result = data.results.find(c => c.country.toLowerCase().includes(finalCountry.toLowerCase())) || data.results[0];
-
-
         return { city: result.name, country: result.country, lat: result.latitude, lon: result.longitude };
+
 
     } catch (err) {
         console.error("Could not find data", err.message);
@@ -37,12 +38,14 @@ export async function getCity(name) {
     }
 }
 
+
 export async function getWeather(lat, lon) {
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+
+
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`;
     const res = await fetch(weatherUrl);
     if (!res.ok) throw new Error("Could not fetch data");
     const data = await res.json();
-
 
 
     const latitude = data.latitude;
@@ -50,8 +53,10 @@ export async function getWeather(lat, lon) {
     const temp = data.current.temperature_2m;
     const humidity = data.current.relative_humidity_2m;
     const windSpeed = data.current.wind_speed_10m;
+    const sunrise = data.daily.sunrise;
+    const sunset = data.daily.sunset;
+    const weatherCode = data.current.weather_code;
 
 
-
-    return { latitude, longitude, temp, humidity, windSpeed, daily: data.daily };
+    return { latitude, longitude, temp, humidity, windSpeed, daily: data.daily, hourly: data.hourly, sunrise, sunset, weatherCode };
 }
