@@ -9,6 +9,7 @@ import { createFeelslike } from "./rendering/feelslike.js";
 
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
+const resultsMsg = document.querySelector('#resultsMsg');
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
@@ -25,10 +26,13 @@ searchBtn.addEventListener('click', async () => {
     const prec = await precipitationData();
     const feels = await feelsLikeData();
 
+    resultsMsg.textContent = "Loading...";
 
-    createCities(cities);
-    createSolarData(sol);
-    createPrecipitation(prec);
-    createFeelslike(feels)
+    setTimeout(() => {
+        createCities(cities);
+        createSolarData(sol);
+        createPrecipitation(prec);
+        createFeelslike(feels)
+    }, 2000);
 
 });

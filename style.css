@@ -333,6 +333,65 @@ body>* {
   gap: 8px;
 }
 
+
+.history-item-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.history-item-wrapper.removing {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.history-item {
+  flex: 1;
+}
+
+.history-item-remove {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.history-item-remove:hover {
+  background: rgba(255, 0, 0, 0.1);
+  color: #d32f2f;
+  transform: scale(1.1);
+}
+
+.history-item-remove:active {
+  transform: scale(0.95);
+}
+
+.history-item-remove:focus {
+  outline: 2px solid #ff9800;
+  outline-offset: 2px;
+}
+
+body.dark-mode .history-item-remove {
+  color: #666;
+}
+
+body.dark-mode .history-item-remove:hover {
+  background: rgba(255, 0, 0, 0.2);
+  color: #ff6b6b;
+}
+
 .history-item {
   padding: 8px 12px;
   border-radius: 16px;
