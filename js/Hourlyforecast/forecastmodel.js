@@ -1,6 +1,6 @@
 export class Forecastmodel {
 
-    static getNextHours(get, count = 12 ) {
+    static getNextHours(get, count = 6 ) {
         const times = get.hourly.time;
         const temps = get.hourly.temperature_2m;
 
