@@ -20,6 +20,17 @@ const displaySunset = document.getElementById("sunset");
 
 let currentCity = "";
 const hourlyApp = new App();
+let map = null;
+
+function initMap(lat, lon, cityName) {
+  if (map) {
+    map.remove();
+  }
+
+  map = L.map('map').setView([lat, lon], 10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  L.marker([lat, lon]).addTo(map).bindPopup(cityName).openPopup();
+}
 
 async function loadWeatherForCity(cityName) {
   try {
@@ -30,6 +41,7 @@ async function loadWeatherForCity(cityName) {
       await fetchForecastByCoords(city.lat, city.lon);
 
     hourlyApp.render(conditions);
+    initMap(city.lat, city.lon, `${city.city}, ${city.country}`);
 
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
