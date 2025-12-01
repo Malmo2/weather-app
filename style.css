@@ -152,6 +152,58 @@ body>* {
   color: #1F2933;
 }
 
+.hourly-forecast-section {
+  background-color: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+  
+}
+
+.hourly-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 40px;
+  padding: 11.5px;
+  background-color: #F8FAFC;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.hourly-time {
+  font-size: 14px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.hourly-temp {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1F2933;
+}
+
+.hourly-icon {
+  font-size: 28px;
+  color: #F59E0B;
+  margin: 8px 0;
+}
+
+.hourly-humidity,
+.hourly-wind {
+  font-size: 12px;
+  color: #64748B;
+}
+
 .stat-label {
   font-size: 14px;
   color: #475569;
@@ -472,6 +524,30 @@ body.dark-mode {
 
 .dark-mode #theme-toggle {
   background-color: #F59E0B;
+}
+
+.dark-mode .hourly-forecast-section {
+  background-color: #2D3748;
+  border-color: #4A5568;
+}
+
+.dark-mode .hourly-item {
+  background-color: #1A202C;
+  color: #F4F7FB;
+}
+
+.dark-mode .hourly-time,
+.dark-mode .hourly-humidity,
+.dark-mode .hourly-wind {
+  color: #94A3B8;
+}
+
+.dark-mode .hourly-temp {
+  color: #F4F7FB;
+}
+
+.dark-mode .hourly-icon {
+  color: #FBBF24;
 }
 
 /* Responsive */
