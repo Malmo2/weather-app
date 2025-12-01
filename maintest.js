@@ -12,12 +12,9 @@ const forecastContainer = document.querySelector(".center-column");
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
 
-displayHistory();
-
-btn.addEventListener("click", async () => {
+async function searchWeather(cityName) {
   try {
-    const input = cityInput.value.trim();
-    const city = await getCity(input);
+    const city = await getCity(cityName);
     if (!city.lat || !city.lon) throw new Error("City not found");
 
     const { conditions, dailyData } = await fetchForecastByCoords(
@@ -35,10 +32,36 @@ btn.addEventListener("click", async () => {
     forecastContainer.appendChild(forecastElement);
 
     addToHistory(city.city);
-    displayHistory();
+
+    displayHistory((clickedCity) => {
+      cityInput.value = clickedCity;
+      searchWeather(clickedCity);
+    });
 
     cityInput.value = "";
   } catch (err) {
     console.error("Could not fetch data", err.message);
+    alert("Could not find city. Please try again.");
+  }
+}
+
+displayHistory((clickedCity) => {
+  cityInput.value = clickedCity;
+  searchWeather(clickedCity);
+});
+
+btn.addEventListener("click", async () => {
+  const input = cityInput.value.trim();
+  if (input) {
+    await searchWeather(input);
+  }
+});
+
+cityInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    const input = cityInput.value.trim();
+    if (input) {
+      searchWeather(input);
+    }
   }
 });
