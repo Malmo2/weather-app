@@ -22,18 +22,11 @@ const cityInput = document.getElementById("searchInput");
 const displaySunrise = document.getElementById('sunrise');
 const displaySunset = document.getElementById('sunset');
 
-
-
-displayHistory();
-removeHistory();
-initDarkMode();
 const hourlyApp = new App();
 
-
-btn.addEventListener("click", async () => {
+async function loadWeatherForCity(cityName) {
   try {
-    const input = cityInput.value.trim();
-    const city = await getCity(input);
+    const city = await getCity(cityName);
     if (!city.lat || !city.lon) throw new Error("City not found");
     const { conditions, dailyData, sunrise, sunset } = await fetchForecastByCoords(
       city.lat,
@@ -42,15 +35,12 @@ btn.addEventListener("click", async () => {
 
     hourlyApp.render(conditions);
 
-
-
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
     displayHumid.textContent = `${Math.round(conditions.humidity)}%`;
     displayWindSpeed.textContent = `${Math.round(conditions.windSpeed)} km/h`;
     displaySunrise.textContent = toTime(sunrise);
     displaySunset.textContent = toTime(sunset);
-
 
     const iconClass = conditions.icon ?? "fa-sun";
     const iconLabel = conditions.iconLabel ?? "Current weather";
@@ -64,18 +54,24 @@ btn.addEventListener("click", async () => {
     forecastContainer.appendChild(forecastElement);
 
     addToHistory(city.city);
-
-    displayHistory();
+    displayHistory(loadWeatherForCity);
 
     cityInput.value = "";
-
 
   } catch (err) {
     console.error("Could not fetch data", err.message);
   }
+}
 
+displayHistory(loadWeatherForCity);
+removeHistory();
+initDarkMode();
 
-
+btn.addEventListener("click", async () => {
+  const input = cityInput.value.trim();
+  if (input) {
+    await loadWeatherForCity(input);
+  }
 });
 cityInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
