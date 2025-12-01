@@ -42,7 +42,7 @@ export async function getCity(name) {
 export async function getWeather(lat, lon) {
 
 
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`;
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`;
     const res = await fetch(weatherUrl);
     if (!res.ok) throw new Error("Could not fetch data");
     const data = await res.json();

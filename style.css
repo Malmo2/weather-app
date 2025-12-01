@@ -192,6 +192,12 @@ body>* {
   color: #1F2933;
 }
 
+.hourly-icon {
+  font-size: 28px;
+  color: #F59E0B;
+  margin: 8px 0;
+}
+
 .hourly-humidity,
 .hourly-wind {
   font-size: 12px;
@@ -538,6 +544,10 @@ body.dark-mode {
 
 .dark-mode .hourly-temp {
   color: #F4F7FB;
+}
+
+.dark-mode .hourly-icon {
+  color: #FBBF24;
 }
 
 /* Responsive */

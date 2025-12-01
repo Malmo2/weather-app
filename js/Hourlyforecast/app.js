@@ -8,7 +8,7 @@ export class App {
 
     render(weatherData) {
         try {
-            const hours = Forecastmodel.getNextHours(weatherData, 6)
+            const hours = Forecastmodel.getNextHours(weatherData, 8)
             this.view.render(hours);
         }
         catch(e) {
