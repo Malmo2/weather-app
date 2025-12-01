@@ -1,11 +1,11 @@
-import { extractGeo } from "./newjs/classes/cityClass.js";
-import { createCities } from "./newjs/rendering/cities.js";
-import { createSolarData } from "./newjs/rendering/solar.js";
-import { solarData } from "./newjs/classes/solarData.js";
-import { precipitationData } from "./newjs/classes/precipitationData.js";
-import { createPrecipitation } from "./newjs/rendering/precipitation.js";
-import { feelsLikeData } from "./newjs/classes/feelslikeData.js";
-import { createFeelslike } from "./newjs/rendering/feelslike.js";
+import { extractGeo } from "./classes/cityClass.js";
+import { createCities } from "./rendering/cities.js";
+import { createSolarData } from "./rendering/solar.js";
+import { solarData } from "./classes/solarData.js";
+import { precipitationData } from "./classes/precipitationData.js";
+import { createPrecipitation } from "./rendering/precipitation.js";
+import { feelsLikeData } from "./classes/feelslikeData.js";
+import { createFeelslike } from "./rendering/feelslike.js";
 
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');

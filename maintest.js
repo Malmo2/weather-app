@@ -1,11 +1,13 @@
-import { getCity } from "./js/weatherService.js";
-import { fetchForecastByCoords } from "./7dayforecast/7dayforecast.js";
-import { forecast } from "./7dayforecast/forecastView.js";
-import { addToHistory, displayHistory } from "./js/searchHistory.js";
-import { removeHistory } from "./js/clearHistory.js";
-import { toTime } from './js/utils/toTime.js';
-import { initDarkMode } from './darkmode/darkmode.js';
-import { App } from "./Hourlyforecast/app.js"
+import { getCity } from "./js/weatherService.js";                     // from js/weatherService.js
+import { fetchForecastByCoords } from "./js/7dayforecast/7dayforecast.js"; // from js/7dayforecast/7dayforecast.js
+import { forecast } from "./js/7dayforecast/forecastView.js";         // from js/7dayforecast/forecastView.js
+import { addToHistory, displayHistory } from "./js/searchHistory.js"; // from js/searchHistory.js
+import { removeHistory } from "./js/clearHistory.js";                 // from js/clearHistory.js
+import { toTime } from "./js/utils/toTime.js";                        // from js/utils/toTime.js
+import { initDarkMode } from "./js/darkmode/darkmode.js";             // from js/darkmode/darkmode.js
+import { App } from "./js/Hourlyforecast/app.js";                     // from js/Hourlyforecast/app.js
+
+
 
 
 
@@ -37,7 +39,7 @@ btn.addEventListener("click", async () => {
       city.lat,
       city.lon
     );
-    
+
     hourlyApp.render(conditions);
 
 
@@ -67,6 +69,7 @@ btn.addEventListener("click", async () => {
 
     cityInput.value = "";
 
+
   } catch (err) {
     console.error("Could not fetch data", err.message);
   }
@@ -79,3 +82,4 @@ cityInput.addEventListener('keydown', (e) => {
     btn.click()
   }
 })
+

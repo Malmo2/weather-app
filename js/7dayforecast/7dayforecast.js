@@ -1,4 +1,5 @@
-import { getWeather } from "../js/weatherService.js";
+import { getWeather } from "../weatherService.js"; // go up to js/, then use weatherService.js
+
 
 const WEATHER_ICON_MAP = [
     { codes: [0], icon: "fa-sun", label: "Clear sky" },
