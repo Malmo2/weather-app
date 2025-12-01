@@ -1,11 +1,13 @@
-import { getCity } from "./js/weatherService.js";
-import { fetchForecastByCoords } from "./7dayforecast/7dayforecast.js";
-import { forecast } from "./7dayforecast/forecastView.js";
-import { addToHistory, displayHistory } from "./js/searchHistory.js";
-import { removeHistory } from "./js/clearHistory.js";
-import { toTime } from './js/utils/toTime.js';
-import { initDarkMode } from './darkmode/darkmode.js';
-import { App } from "./Hourlyforecast/app.js"
+import { getCity } from "./js/weatherService.js";                     // from js/weatherService.js
+import { fetchForecastByCoords } from "./js/7dayforecast/7dayforecast.js"; // from js/7dayforecast/7dayforecast.js
+import { forecast } from "./js/7dayforecast/forecastView.js";         // from js/7dayforecast/forecastView.js
+import { addToHistory, displayHistory } from "./js/searchHistory.js"; // from js/searchHistory.js
+import { removeHistory } from "./js/clearHistory.js";                 // from js/clearHistory.js
+import { toTime } from "./js/utils/toTime.js";                        // from js/utils/toTime.js
+import { initDarkMode } from "./js/darkmode/darkmode.js";             // from js/darkmode/darkmode.js
+import { App } from "./js/Hourlyforecast/app.js";                     // from js/Hourlyforecast/app.js
+
+
 
 
 
@@ -20,27 +22,18 @@ const cityInput = document.getElementById("searchInput");
 const displaySunrise = document.getElementById('sunrise');
 const displaySunset = document.getElementById('sunset');
 
-
-
-displayHistory();
-removeHistory();
-initDarkMode();
 const hourlyApp = new App();
 
-
-btn.addEventListener("click", async () => {
+async function loadWeatherForCity(cityName) {
   try {
-    const input = cityInput.value.trim();
-    const city = await getCity(input);
+    const city = await getCity(cityName);
     if (!city.lat || !city.lon) throw new Error("City not found");
     const { conditions, dailyData, sunrise, sunset } = await fetchForecastByCoords(
       city.lat,
       city.lon
     );
-    
+
     hourlyApp.render(conditions);
-
-
 
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
@@ -48,7 +41,6 @@ btn.addEventListener("click", async () => {
     displayWindSpeed.textContent = `${Math.round(conditions.windSpeed)} km/h`;
     displaySunrise.textContent = toTime(sunrise);
     displaySunset.textContent = toTime(sunset);
-
 
     const iconClass = conditions.icon ?? "fa-sun";
     const iconLabel = conditions.iconLabel ?? "Current weather";
@@ -62,20 +54,28 @@ btn.addEventListener("click", async () => {
     forecastContainer.appendChild(forecastElement);
 
     addToHistory(city.city);
-
-    displayHistory();
+    displayHistory(loadWeatherForCity);
 
     cityInput.value = "";
 
   } catch (err) {
     console.error("Could not fetch data", err.message);
   }
+}
 
+displayHistory(loadWeatherForCity);
+removeHistory();
+initDarkMode();
 
-
+btn.addEventListener("click", async () => {
+  const input = cityInput.value.trim();
+  if (input) {
+    await loadWeatherForCity(input);
+  }
 });
 cityInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     btn.click()
   }
 })
+

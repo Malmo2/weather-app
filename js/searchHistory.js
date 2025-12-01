@@ -28,7 +28,6 @@ export function addToHistory(city) {
     saveHistory(history); // Save updated history
     console.log("Current history:", history);
 
-    announceToScreenReader(`${city} added to search history`); // Announce to screen reader
   } catch (error) {
     // Catch any errors
     console.error("Couldn't add to history:", error.message);
