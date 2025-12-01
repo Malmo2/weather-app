@@ -22,18 +22,11 @@ const cityInput = document.getElementById("searchInput");
 const displaySunrise = document.getElementById('sunrise');
 const displaySunset = document.getElementById('sunset');
 
+
+let currentCity = "";
+
+
 const hourlyApp = new App();
-
-let map = null;
-
-function initMap(lat, lon, cityName) {
-  if (map) {
-    map.remove();
-  }
-  map = L.map('map').setView([lat, lon], 12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-  L.marker([lat, lon]).addTo(map).bindPopup(cityName).openPopup();
-}
 
 async function loadWeatherForCity(cityName) {
   try {
@@ -45,7 +38,6 @@ async function loadWeatherForCity(cityName) {
     );
 
     hourlyApp.render(conditions);
-    initMap(city.lat, city.lon, `${city.city}, ${city.country}`);
 
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
@@ -82,7 +74,8 @@ initDarkMode();
 btn.addEventListener("click", async () => {
   const input = cityInput.value.trim();
   if (input) {
-    await loadWeatherForCity(input);
+    currentCity = input;
+    await loadWeatherForCity(currentCity);
   }
 });
 cityInput.addEventListener('keydown', (e) => {
@@ -90,4 +83,12 @@ cityInput.addEventListener('keydown', (e) => {
     btn.click()
   }
 })
+
+let intervalId;
+
+intervalId = setInterval(async () => {
+  if (currentCity) {
+    await loadWeatherForCity(currentCity);
+  }
+}, 15 * 60 * 10000);
 

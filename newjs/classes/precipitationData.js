@@ -16,7 +16,7 @@ export class precipitationClass {
 export async function precipitationData() {
     const data = await getPrecipitation();
 
-    
+
 
 
     const hourly = data.hourly;
