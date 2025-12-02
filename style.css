@@ -204,10 +204,6 @@ body > * {
   color: #64748b;
 }
 
-.stat-label {
-  font-size: 14px;
-  color: #475569;
-}
 .weather-card .card-label {
   font-size: 13px;
   font-weight: 500;
@@ -530,7 +526,6 @@ body.dark-mode {
   color: #f4f7fb;
 }
 
-.dark-mode .stat-label,
 .dark-mode .sun-label {
   color: #cbd5e1;
 }
