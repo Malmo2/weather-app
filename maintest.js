@@ -6,6 +6,7 @@ import { removeHistory } from "./js/clearHistory.js";
 import { toTime } from "./js/utils/toTime.js";
 import { initDarkMode } from "./js/darkmode/darkmode.js";
 import { App } from "./js/Hourlyforecast/app.js";
+import { updateWeatherCards } from "./js/weatherCards.js";
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
@@ -27,8 +28,8 @@ function initMap(lat, lon, cityName) {
     map.remove();
   }
 
-  map = L.map('map').setView([lat, lon], 10);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  map = L.map("map").setView([lat, lon], 10);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
   L.marker([lat, lon]).addTo(map).bindPopup(cityName).openPopup();
 }
 
@@ -49,6 +50,13 @@ async function loadWeatherForCity(cityName) {
     displayWindSpeed.textContent = `${Math.round(conditions.windSpeed)} km/h`;
     displaySunrise.textContent = toTime(sunrise);
     displaySunset.textContent = toTime(sunset);
+    // Update weather cards
+    updateWeatherCards({
+      humidity: conditions.humidity,
+      uvIndex: conditions.uvIndex || 4,
+      rain: conditions.rain || 0,
+      windSpeed: conditions.windSpeed,
+    });
 
     const iconClass = conditions.icon ?? "fa-sun";
     const iconLabel = conditions.iconLabel ?? "Current weather";
@@ -85,16 +93,14 @@ btn.addEventListener("click", async () => {
   }
 });
 
-
 cityInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     btn.click();
   }
 });
 
-
 let intervalId = setInterval(async () => {
   if (currentCity) {
     await loadWeatherForCity(currentCity);
   }
-}, 15 * 60 * 1000); 
+}, 15 * 60 * 1000);
