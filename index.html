@@ -16,7 +16,7 @@
     <button id="theme-toggle" aria-label="Toggle dark mode">
         <i class="fa-solid fa-moon"></i>
     </button>
-    
+
     <!-- Search Bar -->
     <div class="searchBar" role="search" aria-label="Weather search">
         <input type="text" id="searchInput" placeholder="Enter a city..." aria-label="search city">
@@ -25,21 +25,40 @@
         </button>
     </div>
     <!-- Hero Weather Display -->
+    <!-- Hero Weather Display -->
     <section class="hero-weather" aria-live="polite">
         <i class="main-weather-icon fa-solid fa-cloud-sun" id="mainWeatherIcon" role="img"
             aria-label="Partly cloudy"></i>
         <div class="main-temp" id="mainTemp" aria-label="Current temperature">9°C</div>
         <h1 class="location" id="location">Malmö, Sweden</h1>
-        <div class="weather-stats" role="group" aria-label="Weather details">
-            <div class="stat-item">
-                <i class="fa-solid fa-droplet stat-icon" aria-hidden="true"></i>
-                <span class="stat-value" id="humidity">89%</span>
-                <span class="stat-label">Humidity</span>
+
+        <div class="weather-cards">
+            <!-- Card: Humidity -->
+            <div class="weather-card">
+                <i class="fa-solid fa-droplet card-icon"></i>
+                <p class="card-label">Humidity</p>
+                <p class="card-value humidity-value">--</p>
             </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-wind stat-icon" aria-hidden="true"></i>
-                <span class="stat-value" id="windSpeed">2 km/h</span>
-                <span class="stat-label">Wind Speed</span>
+
+            <!-- Card: UV Index -->
+            <div class="weather-card">
+                <i class="fa-solid fa-sun card-icon"></i>
+                <p class="card-label">UV Index</p>
+                <p class="card-value uv-value">--</p>
+            </div>
+
+            <!-- Card: Rain -->
+            <div class="weather-card">
+                <i class="fa-solid fa-cloud-rain card-icon"></i>
+                <p class="card-label">Rain</p>
+                <p class="card-value rain-value">--</p>
+            </div>
+
+            <!-- Card: Wind -->
+            <div class="weather-card">
+                <i class="fa-solid fa-wind card-icon"></i>
+                <p class="card-label">Wind</p>
+                <p class="card-value wind-value">--</p>
             </div>
         </div>
     </section>
