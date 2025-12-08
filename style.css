@@ -270,7 +270,15 @@ body.dark-mode {
   padding: 20px;
   margin-bottom: 32px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.hourly-forecast-section .card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  align-self: flex-start;
+  margin-left: 40px;
 }
 
 .card-title {
@@ -287,6 +295,7 @@ body.dark-mode {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
   padding: 10px 0;
 }
 

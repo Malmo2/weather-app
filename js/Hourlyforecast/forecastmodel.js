@@ -2,7 +2,7 @@ import { getWeatherIcon } from "../7dayforecast/7dayforecast.js";
 
 export class Forecastmodel {
 
-    static getNextHours(get, count = 12 ) {
+    static getNextHours(get, count = 11 ) {
         const times = get.hourly.time;
         const temps = get.hourly.temperature_2m;
         const codes = get.hourly.weather_code ?? [];

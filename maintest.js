@@ -43,7 +43,6 @@ async function loadWeatherForCity(cityName) {
 
     hourlyApp.render(conditions, sunrise, sunset);
     initMap(city.lat, city.lon, `${city.city}, ${city.country}`);
-
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
 
