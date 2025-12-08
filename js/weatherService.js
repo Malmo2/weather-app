@@ -1,62 +1,78 @@
 export async function getCity(name) {
-    try {
-        const split = name.trim().split(" ");
-        const cityName = split.slice(0, -1).join(" ");
-        const countryName = split.slice(-1).join(" ");
-        const finalCity = cityName || split[0];
-        const finalCountry = split.length > 1 ? countryName : undefined;
-        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(finalCity)}&count=50&language=en&format=json`;
-        const res = await fetch(geoUrl);
+  try {
+    const split = name.trim().split(" ");
+    const cityName = split.slice(0, -1).join(" ");
+    const countryName = split.slice(-1).join(" ");
+    const finalCity = cityName || split[0];
+    const finalCountry = split.length > 1 ? countryName : undefined;
+    const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+      finalCity
+    )}&count=50&language=en&format=json`;
+    const res = await fetch(geoUrl);
 
-
-
-
-        if (!res.ok) throw new Error("Could not fetch data");
-        const data = await res.json();
-
-
-
-        if (!data.results || data.results.length === 0) {
-            return { city: null, country: null, lat: null, lon: null };
-        }
-        let result;
-
-
-        if (finalCountry === undefined) {
-            result = data.results[0];
-            return { city: result.name, country: result.country, lat: result.latitude, lon: result.longitude };
-        }
-
-
-        result = data.results.find(c => c.country.toLowerCase().includes(finalCountry.toLowerCase())) || data.results[0];
-        return { city: result.name, country: result.country, lat: result.latitude, lon: result.longitude };
-
-
-    } catch (err) {
-        console.error("Could not find data", err.message);
-        return { city: null, country: null, lat: null, lon: null };
-    }
-}
-
-
-export async function getWeather(lat, lon) {
-
-
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`;
-    const res = await fetch(weatherUrl);
     if (!res.ok) throw new Error("Could not fetch data");
     const data = await res.json();
 
+    if (!data.results || data.results.length === 0) {
+      return { city: null, country: null, lat: null, lon: null };
+    }
+    let result;
 
-    const latitude = data.latitude;
-    const longitude = data.longitude;
-    const temp = data.current.temperature_2m;
-    const humidity = data.current.relative_humidity_2m;
-    const windSpeed = data.current.wind_speed_10m;
-    const sunrise = data.daily.sunrise;
-    const sunset = data.daily.sunset;
-    const weatherCode = data.current.weather_code;
+    if (finalCountry === undefined) {
+      result = data.results[0];
+      return {
+        city: result.name,
+        country: result.country,
+        lat: result.latitude,
+        lon: result.longitude,
+      };
+    }
 
+    result =
+      data.results.find((c) =>
+        c.country.toLowerCase().includes(finalCountry.toLowerCase())
+      ) || data.results[0];
+    return {
+      city: result.name,
+      country: result.country,
+      lat: result.latitude,
+      lon: result.longitude,
+    };
+  } catch (err) {
+    console.error("Could not find data", err.message);
+    return { city: null, country: null, lat: null, lon: null };
+  }
+}
 
-    return { latitude, longitude, temp, humidity, windSpeed, daily: data.daily, hourly: data.hourly, sunrise, sunset, weatherCode };
+export async function getWeather(lat, lon) {
+  const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,uv_index_max&timezone=auto`;
+  const res = await fetch(weatherUrl);
+  if (!res.ok) throw new Error("Could not fetch data");
+  const data = await res.json();
+
+  const latitude = data.latitude;
+  const longitude = data.longitude;
+  const temp = data.current.temperature_2m;
+  const humidity = data.current.relative_humidity_2m;
+  const windSpeed = data.current.wind_speed_10m;
+  const rain = data.current.rain || 0;
+  const uvIndex = data.daily.uv_index_max?.[0] || 0;
+  const sunrise = data.daily.sunrise;
+  const sunset = data.daily.sunset;
+  const weatherCode = data.current.weather_code;
+
+  return {
+    latitude,
+    longitude,
+    temp,
+    humidity,
+    windSpeed,
+    rain,
+    uvIndex,
+    daily: data.daily,
+    hourly: data.hourly,
+    sunrise,
+    sunset,
+    weatherCode,
+  };
 }
