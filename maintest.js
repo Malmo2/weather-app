@@ -10,8 +10,6 @@ import { updateWeatherCards } from "./js/weatherCards.js";
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
-const displayHumid = document.getElementById("humidity");
-const displayWindSpeed = document.getElementById("windSpeed");
 const mainWeatherIcon = document.getElementById("mainWeatherIcon");
 const forecastContainer = document.querySelector(".center-column");
 const btn = document.getElementById("searchBtn");
@@ -49,11 +47,9 @@ async function loadWeatherForCity(cityName) {
 
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
-    displayHumid.textContent = `${Math.round(conditions.humidity)}%`;
-    displayWindSpeed.textContent = `${Math.round(conditions.windSpeed)} km/h`;
     displaySunrise.textContent = toTime(sunrise);
     displaySunset.textContent = toTime(sunset);
-    // Update weather cards
+
     updateWeatherCards({
       humidity: conditions.humidity,
       uvIndex: conditions.uvIndex || 4,
@@ -81,12 +77,10 @@ async function loadWeatherForCity(cityName) {
   }
 }
 
-// Initialize display history on page load
 displayHistory(loadWeatherForCity);
 removeHistory();
 initDarkMode();
 
-// Search button click event
 btn.addEventListener("click", async () => {
   const input = cityInput.value.trim();
   if (input) {
