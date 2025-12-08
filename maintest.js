@@ -36,7 +36,10 @@ function initMap(lat, lon, cityName) {
 async function loadWeatherForCity(cityName) {
   try {
     const city = await getCity(cityName);
-    if (!city.lat || !city.lon) throw new Error("City not found");
+    if (!city.lat || !city.lon) {
+      alert("Could not find city. Please try again.");
+      throw new Error("City not found");
+    }
 
     const { conditions, dailyData, sunrise, sunset } =
       await fetchForecastByCoords(city.lat, city.lon);
@@ -75,7 +78,6 @@ async function loadWeatherForCity(cityName) {
     cityInput.value = "";
   } catch (err) {
     console.error("Could not fetch data", err.message);
-    alert("Could not find city. Please try again.");
   }
 }
 
