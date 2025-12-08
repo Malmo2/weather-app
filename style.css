@@ -269,6 +269,8 @@ body.dark-mode {
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 32px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card-title {
@@ -318,6 +320,27 @@ body.dark-mode {
   margin: 8px 0;
 }
 
+.sun-indicator {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sun-indicator.sunrise {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.sun-indicator.sunset {
+  background-color: #e0e7ff;
+  color: #6366f1;
+}
+
 .hourly-humidity,
 .hourly-wind {
   font-size: 12px;
@@ -346,6 +369,16 @@ body.dark-mode {
 
 .dark-mode .hourly-icon {
   color: #fbbf24;
+}
+
+.dark-mode .sun-indicator.sunrise {
+  background-color: #451a03;
+  color: #fbbf24;
+}
+
+.dark-mode .sun-indicator.sunset {
+  background-color: #312e81;
+  color: #a5b4fc;
 }
 
 /* ================================
