@@ -783,6 +783,13 @@ body.dark-mode .history-item-remove:hover {
   color: var(--text-main);
   position: relative;
   overflow: hidden;
+  padding: 0;
+}
+
+.precipitation-card .map-container {
+  margin-top: 0;
+  height: 100%;
+  border-radius: 12px;
 }
 
 .precipitation-card .card-header,
