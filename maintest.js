@@ -97,6 +97,7 @@ cityInput.addEventListener("keydown", (e) => {
   }
 });
 
+
 let intervalId = setInterval(async () => {
   if (currentCity) {
     await loadWeatherForCity(currentCity);

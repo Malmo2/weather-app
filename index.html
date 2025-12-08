@@ -71,8 +71,8 @@
         <h3 class="card-title">Hourly Forecast</h3>
         <div id="hours" class="hourly-scroll"></div>
     </section>
-    
-  
+
+
     <div class="three-column-grid">
         <section class="left-column">
             <div class="map-card">
@@ -110,6 +110,94 @@
             </div>
         </section>
     </div>
+
+    <!-- DETAILS GRID -->
+
+    <section class="details-grid">
+        <div class="detail-card average-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-chart-line"></i> Average</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">+4°</div>
+            <div class="card-subtext">Above the daily highest average.</div>
+            <div class="average-stats">
+                <div class="avg-row"><span>Today</span> <span>T:10°</span></div>
+                <div class="avg-row"><span>Average</span> <span>T:10°</span></div>
+            </div>
+        </div>
+
+        <div class="detail-card feels-like-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-temperature-half"></i> Feels like"</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">36°</div>
+            <div class="card-subtext">Feels hotter than the actual temperature</div>
+        </div>
+
+        <div class="detail-card uv-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-sun"></i> Index UV</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">0</div>
+            <div class="uv-status">Low</div>
+            <div class="uv-bar">
+                <div class="uv-fill" style="width: 20%"></div>
+            </div>
+            <div class="card-subtext">Low throughout the day.</div>
+        </div>
+
+        <div class="detail-card visibility-card">
+            <div class="card-header">
+                <span><i class="fa-regular fa-eye"></i> Visibility</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">28 km</div>
+            <div class="card-subtext">The view is truly bright.</div>
+        </div>
+
+        <div class="detail-card humidity-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-droplet"></i> Humidity</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">76%</div>
+            <div class="card-subtext">The dew point is currently 24°C.</div>
+        </div>
+
+        <div class="detail-card pressure-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-gauge"></i> Pressure</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="pressure-gauge">
+                <div class="gauge-value">1.009 <span>hPa</span></div>
+            </div>
+        </div>
+
+        <div class="detail-card air-quality-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-wind"></i> Air Quality</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">Normal</div>
+            <div class="card-subtext">Air quality is generally acceptable for most people. However, sensitive groups may
+                experience mild to moderate symptoms from long-term exposure.</div>
+            <button class="details-btn">See Details →</button>
+        </div>
+
+        <div class="detail-card precipitation-card">
+            <div class="card-header">
+                <span>Precipitation</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="card-subtext">Weather for Malmö</div>
+            <div class="card-tiny-text">More about weather data and map data</div>
+            <div class="map-placeholder"></div>
+        </div>
+    </section>
     <script src="maintest.js" type="module" defer></script>
 </body>
 
