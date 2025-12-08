@@ -4,7 +4,7 @@ export function updateWeatherCards(weatherData) {
   const uvElement = document.querySelector(".uv-value");
   const rainElement = document.querySelector(".rain-value");
   const windValueElement = document.querySelector(".wind-value");
-
+  try {
   if (humidityElement) {
     humidityElement.textContent = `${Math.round(weatherData.humidity)}%`;
   }
@@ -16,5 +16,9 @@ export function updateWeatherCards(weatherData) {
   }
   if (windValueElement) {
     windValueElement.textContent = `${Math.round(weatherData.windSpeed)} km/h`;
+  } 
+  } catch(e) {
+    console.error("Error updating weather cards:", e.message);
+        showError("Weather cards could not be updated.");
   }
 }

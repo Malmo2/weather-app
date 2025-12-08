@@ -7,6 +7,7 @@ import { toTime } from "./js/utils/toTime.js";
 import { initDarkMode } from "./js/darkmode/darkmode.js";
 import { App } from "./js/Hourlyforecast/app.js";
 import { updateWeatherCards } from "./js/weatherCards.js";
+import { showError } from "./js/utils/errorHandling.js";
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
@@ -35,7 +36,7 @@ async function loadWeatherForCity(cityName) {
   try {
     const city = await getCity(cityName);
     if (!city.lat || !city.lon) {
-      alert("Could not find city. Please try again.");
+      showError("Could not find city. Please try another city."); // <-- changed here
       throw new Error("City not found");
     }
 
@@ -74,6 +75,7 @@ async function loadWeatherForCity(cityName) {
     cityInput.value = "";
   } catch (err) {
     console.error("Could not fetch data", err.message);
+    showError("Failed to load weather data."); 
   }
 }
 

@@ -10,9 +10,9 @@ export class App {
         try {
             const hours = Forecastmodel.getNextHours(weatherData, 8)
             this.view.render(hours);
-        }
-        catch(e) {
-            console.error("Failed to render hourly forecast:", e.message); 
-        }
+        } catch(e) {
+        console.error("Failed to render hourly forecast:", e.message);
+        showError("Failed to load hourly forecast."); // <-- UI error
+    }
     }
 }

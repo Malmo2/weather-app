@@ -54,6 +54,17 @@ body > * {
   margin: 30px auto 40px;
 }
 
+/* error handling */
+.error-message {
+  color: #fff;
+  background-color: #e74c3c;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  display: none;
+}
+
+
 #searchInput {
   width: 100%;
   padding: 18px 56px 18px 24px;
