@@ -232,8 +232,7 @@ body.dark-mode {
 .dark-mode .map-card,
 .dark-mode .sun-times-card,
 .dark-mode .history-card,
-.dark-mode .center-column,
-.dark-mode .forecast-item {
+.dark-mode .center-column {
   background-color: #2d3748;
   border-color: #4a5568;
   color: #f4f7fb;
