@@ -455,20 +455,24 @@ body.dark-mode {
 }
 
 .center-column {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 /* ================================
    7-DAY FORECAST STYLES
    ================================ */
 .seven-day-forecast {
-  background-color: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 32px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .forecast-header {
@@ -482,6 +486,7 @@ body.dark-mode {
   font-size: 18px;
   font-weight: 600;
   color: var(--text-main);
+  margin-left: 40px;
 }
 
 .forecast-subtitle {
@@ -494,6 +499,8 @@ body.dark-mode {
   flex-wrap: wrap;
   gap: 20px;
   padding: 10px 0;
+  justify-content: flex-start;
+  margin-left: 29px;
 }
 
 .forecast-item {
@@ -501,9 +508,10 @@ body.dark-mode {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  min-width: 80px;
+  min-width: 60px;
   padding: 11.5px;
-  background-color: #f8fafc;
+  background-color: transparent;
+  border: none;
   border-radius: 8px;
   flex-shrink: 0;
   text-align: center;
