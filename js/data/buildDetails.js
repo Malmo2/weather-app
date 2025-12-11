@@ -1,14 +1,13 @@
 import { feelsLikeData } from "../../newjs/classes/feelslikeData.js";
-import { precipitationData } from "../../newjs/classes/precipitationData.js";
 import { pressureVisibilityData } from "../../newjs/classes/pressureVisibilityData.js";
 import { airQualityData } from "../../newjs/classes/airQualityData.js";
 
 export async function buildDetailsData(conditions, dailyData, city) {
     let feels = { currentFeelsLike: conditions.feelsLike ?? conditions.temp ?? 0 };
-    let precipitation = { precipitationProbability: 0 };
+
     let pressureVisibility = {
         pressure: conditions.pressure ?? 1013,
-        visibility: conditions.visibilityKm ?? 10
+        visibility: conditions.visibilityKm ?? 10,
     };
 
     let airQuality = { pm10: 0, pm25: 0 };
@@ -20,13 +19,7 @@ export async function buildDetailsData(conditions, dailyData, city) {
     }
 
     try {
-        precipitation = await precipitationData();
-    } catch (e) {
-        console.error("precipitationData failed", e);
-    }
-
-    try {
-        pressureVisibility = await pressureVisibilityData(city.lat, city.lon); // ← here
+        pressureVisibility = await pressureVisibilityData(city.lat, city.lon);
     } catch (e) {
         console.error("pressureVisibilityData failed", e);
     }
@@ -34,19 +27,48 @@ export async function buildDetailsData(conditions, dailyData, city) {
     try {
         airQuality = await airQualityData(city.lat, city.lon);
     } catch (e) {
-        console.error('airQualityData failed', e);
+        console.error("airQualityData failed", e);
     }
 
     const baseTemp = conditions.temp ?? feels.currentFeelsLike ?? 0;
-    const temp = Math.round(baseTemp);
+    const currentTemp = Math.round(baseTemp);
 
     const feelsLike = Math.round(
         feels.currentFeelsLike ?? conditions.feelsLike ?? baseTemp
     );
 
-    const avgDelta = feelsLike - temp;
-    const todayAvg = temp;
-    const normalAvg = temp;
+    let todayAvg = currentTemp;
+    let normalAvg = currentTemp;
+
+    if (Array.isArray(dailyData) && dailyData.length > 0) {
+        const firstDay = dailyData[0];
+
+        const dayMax = firstDay?.temp?.max ?? currentTemp;
+        const dayMin = firstDay?.temp?.min ?? currentTemp;
+
+        todayAvg = Math.round((dayMax + dayMin) / 2);
+
+        let sum = 0;
+        let count = 0;
+
+        for (const day of dailyData) {
+            const max = day?.temp?.max;
+            const min = day?.temp?.min;
+
+            if (typeof max === "number" && typeof min === "number") {
+                sum += (max + min) / 2;
+                count++;
+            }
+        }
+
+        if (count > 0) {
+            normalAvg = Math.round(sum / count);
+        }
+    }
+
+    const avgDelta = todayAvg - normalAvg;
+
+
 
     const uvIndex = conditions.uvIndex ?? 0;
 
@@ -78,23 +100,13 @@ export async function buildDetailsData(conditions, dailyData, city) {
     const pressureUnit = "hPa";
 
     const airQualityStatus =
-        airQuality.pm25 < 12 ? "Good"
-            : airQuality.pm25 < 35 ? "Moderate"
+        airQuality.pm25 < 12
+            ? "Good"
+            : airQuality.pm25 < 35
+                ? "Moderate"
                 : "Poor";
 
-    const airQualityDescription =
-        `PM10: ${airQuality.pm10}, PM2.5: ${airQuality.pm25}`;
-
-    const location =
-        "Weather for " + (city?.city ?? "your location");
-
-    const precipitationInfo =
-        "Precipitation chance: " +
-        (precipitation.precipitationProbability ?? 0) +
-        "%";
-
-
-
+    const airQualityDescription = `PM10: ${airQuality.pm10}, PM2.5: ${airQuality.pm25}`;
 
     return {
         avgDelta,
@@ -113,7 +125,5 @@ export async function buildDetailsData(conditions, dailyData, city) {
         pressureUnit,
         airQualityStatus,
         airQualityDescription,
-        location,
-        precipitationInfo,
     };
 }

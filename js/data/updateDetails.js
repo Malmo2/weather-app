@@ -23,12 +23,9 @@ const airQualityValue = document.querySelector('.air-quality-card .card-value');
 const airQualityText = document.querySelector('.air-quality-card .card-subtext');
 const airQualityDetailsBtn = document.querySelector('.air-quality-card .details-btn');
 
-const precipLocationText = document.querySelector('.precipitation-card .card-subtext');
-const precipExtraText = document.querySelector('.precipitation-card .card-tiny-text');
-const precipMapPlaceholder = document.querySelector('.precipitation-card .map-placeholder');
-
 export function updateDetailsGrid(data) {
-    avgDelta.textContent = `+${data.avgDelta}°`;
+    const delta = data.avgDelta;
+    avgDelta.textContent = `${delta > 0 ? "+" : ""}${delta}°`;
     avgToday.textContent = `T:${data.todayAvg}°`;
     avgAverage.textContent = `T:${data.normalAvg}°`;
 
@@ -50,7 +47,4 @@ export function updateDetailsGrid(data) {
 
     airQualityValue.textContent = data.airQualityStatus;
     airQualityText.textContent = data.airQualityDescription;
-
-    precipLocationText.textContent = data.location;
-    precipExtraText.textContent = data.precipitationInfo;
 }
