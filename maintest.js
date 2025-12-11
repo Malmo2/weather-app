@@ -3,11 +3,12 @@ import { fetchForecastByCoords } from "./js/7dayforecast/7dayforecast.js";
 import { forecast } from "./js/7dayforecast/forecastView.js";
 import { addToHistory, displayHistory } from "./js/searchHistory.js";
 import { removeHistory } from "./js/clearHistory.js";
-import { toTime } from "./js/utils/toTime.js";
 import { initDarkMode } from "./js/darkmode/darkmode.js";
 import { App } from "./js/Hourlyforecast/app.js";
 import { updateWeatherCards } from "./js/weatherCards.js";
 import { showError } from "./js/utils/errorHandling.js";
+import { updateDetailsGrid } from "./js/data/updateDetails.js";
+import { buildDetailsData } from "./js/data/buildDetails.js";
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
@@ -15,6 +16,12 @@ const mainWeatherIcon = document.getElementById("mainWeatherIcon");
 const forecastContainer = document.querySelector(".center-column");
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
+
+
+console.log("displayCity:", displayCity);
+console.log("displayTemp:", displayTemp);
+console.log("mainWeatherIcon:", mainWeatherIcon);
+console.log("forecastContainer:", forecastContainer);
 
 let currentCity = "";
 const hourlyApp = new App();
@@ -34,7 +41,7 @@ async function loadWeatherForCity(cityName) {
   try {
     const city = await getCity(cityName);
     if (!city.lat || !city.lon) {
-      showError("Could not find city. Please try another city."); // <-- changed here
+      showError("Could not find city. Please try another city.");
       throw new Error("City not found");
     }
 
@@ -53,6 +60,11 @@ async function loadWeatherForCity(cityName) {
       windSpeed: conditions.windSpeed,
     });
 
+    const detailsData = await buildDetailsData(conditions, dailyData, city);
+    console.log(detailsData);
+    updateDetailsGrid(detailsData);
+
+
     const iconClass = conditions.icon ?? "fa-sun";
     const iconLabel = conditions.iconLabel ?? "Current weather";
 
@@ -69,8 +81,14 @@ async function loadWeatherForCity(cityName) {
 
     cityInput.value = "";
   } catch (err) {
-    console.error("Could not fetch data", err.message);
-    showError("Failed to load weather data."); 
+
+    console.error("Could not fetch data", err);
+    if (err && err.stack) {
+      console.error(err.stack);
+    }
+
+
+    showError("Failed to load weather data.");
   }
 }
 
@@ -91,7 +109,6 @@ cityInput.addEventListener("keydown", (e) => {
     btn.click();
   }
 });
-
 
 let intervalId = setInterval(async () => {
   if (currentCity) {
