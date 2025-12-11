@@ -17,8 +17,6 @@ const mainWeatherIcon = document.getElementById("mainWeatherIcon");
 const forecastContainer = document.querySelector(".center-column");
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
-const displaySunrise = document.getElementById("sunrise");
-const displaySunset = document.getElementById("sunset");
 
 let currentCity = "";
 const hourlyApp = new App();
@@ -45,13 +43,10 @@ async function loadWeatherForCity(cityName) {
     const { conditions, dailyData, sunrise, sunset } =
       await fetchForecastByCoords(city.lat, city.lon);
 
-    hourlyApp.render(conditions);
+    hourlyApp.render(conditions, sunrise, sunset);
     initMap(city.lat, city.lon, `${city.city}, ${city.country}`);
-
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
-    displaySunrise.textContent = toTime(sunrise);
-    displaySunset.textContent = toTime(sunset);
 
     updateWeatherCards({
       humidity: conditions.humidity,

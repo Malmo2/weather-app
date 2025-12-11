@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,38 +71,17 @@
         <div id="hours" class="hourly-scroll"></div>
     </section>
 
+    <section class="center-column" aria-labelledby="7-day forecast">
+    </section>
 
     <div class="three-column-grid">
         <section class="left-column">
-            <div class="map-card">
-                <h3 class="card-title">Map</h3>
-                <div id="map" class="map-container"></div>
-            </div>
-            <div class="sun-times-card" aria-labelledby="sunrise-heading">
-                <h3 class="card-title">Sunrise/Sunset</h3>
-                <div class="sun-time-row">
-                    <i class="fa-solid fa-sun sun-icon" aria-hidden="true"></i>
-                    <span class="sun-label">Sunrise</span>
-                    <span class="sun-value" id="sunrise">7:30</span>
-                </div>
-            </div>
-            <div class="sun-times-card" aria-labelledby="sunset-heading">
-                <h3 class="card-title">Sunrise/Sunset</h3>
-                <div class="sun-time-row">
-                    <i class="fa-solid fa-moon sun-icon" aria-hidden="true"></i>
-                    <span class="sun-label">Sunset</span>
-                    <span class="sun-value" id="sunset">16:08</span>
-                </div>
-            </div>
-        </section>
-        <!--Center: 7-day forecast -->
-        <section class="center-column" aria-labelledby="7-day forecast">
         </section>
         <!-- Right: Search History -->
         <section class="right-column">
             <div class="history-card">
                 <h3 class="card-title">Search History</h3>
-                <button id="clearHistoryBtn" class="clear-btn">Clear History</button>
+                <button id="clearHistoryBtn" class="clear-btn" aria-label="Clear search history">Clear History</button>
                 <div class="history-list" id="historyList">
                     <!-- JS HERE -->
                 </div>
@@ -189,13 +167,7 @@
         </div>
 
         <div class="detail-card precipitation-card">
-            <div class="card-header">
-                <span>Precipitation</span>
-                <i class="fa-solid fa-chevron-right"></i>
-            </div>
-            <div class="card-subtext">Weather for Malmö</div>
-            <div class="card-tiny-text">More about weather data and map data</div>
-            <div class="map-placeholder"></div>
+            <div id="map" class="map-container"></div>
         </div>
     </section>
     <script src="maintest.js" type="module" defer></script>

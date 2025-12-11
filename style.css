@@ -32,7 +32,7 @@ body {
   padding: 20px;
 }
 
-body>* {
+body > * {
   max-width: 960px;
   margin: 0 auto;
   width: 100%;
@@ -232,8 +232,7 @@ body.dark-mode {
 .dark-mode .map-card,
 .dark-mode .sun-times-card,
 .dark-mode .history-card,
-.dark-mode .center-column,
-.dark-mode .forecast-item {
+.dark-mode .center-column {
   background-color: #2d3748;
   border-color: #4a5568;
   color: #f4f7fb;
@@ -269,6 +268,16 @@ body.dark-mode {
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hourly-forecast-section .card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  align-self: flex-start;
+  margin-left: 40px;
 }
 
 .card-title {
@@ -285,6 +294,7 @@ body.dark-mode {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
   padding: 10px 0;
 }
 
@@ -318,6 +328,27 @@ body.dark-mode {
   margin: 8px 0;
 }
 
+.sun-indicator {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sun-indicator.sunrise {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.sun-indicator.sunset {
+  background-color: #e0e7ff;
+  color: #6366f1;
+}
+
 .hourly-humidity,
 .hourly-wind {
   font-size: 12px;
@@ -346,6 +377,16 @@ body.dark-mode {
 
 .dark-mode .hourly-icon {
   color: #fbbf24;
+}
+
+.dark-mode .sun-indicator.sunrise {
+  background-color: #451a03;
+  color: #fbbf24;
+}
+
+.dark-mode .sun-indicator.sunset {
+  background-color: #312e81;
+  color: #a5b4fc;
 }
 
 /* ================================
@@ -414,30 +455,38 @@ body.dark-mode {
 }
 
 .center-column {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 /* ================================
    7-DAY FORECAST STYLES
    ================================ */
 .seven-day-forecast {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .forecast-header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .forecast-header h2 {
   font-size: 18px;
   font-weight: 600;
   color: var(--text-main);
+  margin-left: 40px;
 }
 
 .forecast-subtitle {
@@ -447,35 +496,61 @@ body.dark-mode {
 
 .forecast-list {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px 0;
+  justify-content: flex-start;
+  margin-left: 29px;
 }
 
 .forecast-item {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  align-items: center;
-  padding: 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  background-color: #f8fafc;
-  font-size: 14px;
-}
-
-.forecast-day {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
+  min-width: 60px;
+  padding: 11.5px;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  flex-shrink: 0;
+  text-align: center;
 }
 
 .forecast-day-name {
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-main);
 }
 
 .forecast-date {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.forecast-icon {
+  font-size: 36px;
+  color: var(--primary-orange);
+  margin: 8px 0;
+}
+
+.forecast-temp-max {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.forecast-temp-min {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Old classes kept for backwards compatibility */
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .forecast-summary {
@@ -506,14 +581,36 @@ body.dark-mode {
   font-weight: 500;
 }
 
+.dark-mode .seven-day-forecast {
+  background-color: #2d3748;
+  border-color: #4a5568;
+}
+
+.dark-mode .forecast-item {
+  background-color: #1a202c;
+  color: #f4f7fb;
+}
+
 .dark-mode .forecast-day-name,
 .dark-mode .forecast-header h2,
-.dark-mode .forecast-range {
+.dark-mode .forecast-temp-max {
   color: #f4f7fb;
 }
 
 .dark-mode .forecast-date,
 .dark-mode .forecast-subtitle,
+.dark-mode .forecast-temp-min {
+  color: #94a3b8;
+}
+
+.dark-mode .forecast-icon {
+  color: #fbbf24;
+}
+
+.dark-mode .forecast-range {
+  color: #f4f7fb;
+}
+
 .dark-mode .forecast-range .temp-min {
   color: #94a3b8;
 }
@@ -750,6 +847,13 @@ body.dark-mode .history-item-remove:hover {
   color: var(--text-main);
   position: relative;
   overflow: hidden;
+  padding: 0;
+}
+
+.precipitation-card .map-container {
+  margin-top: 0;
+  height: 100%;
+  border-radius: 12px;
 }
 
 .precipitation-card .card-header,
@@ -775,11 +879,13 @@ body.dark-mode .history-item-remove:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: repeating-linear-gradient(45deg,
-      #e0e0e0 0,
-      #e0e0e0 1px,
-      transparent 0,
-      transparent 50%);
+  background-image: repeating-linear-gradient(
+    45deg,
+    #e0e0e0 0,
+    #e0e0e0 1px,
+    transparent 0,
+    transparent 50%
+  );
   background-size: 10px 10px;
   opacity: 0.3;
   z-index: 1;
