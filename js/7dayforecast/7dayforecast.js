@@ -56,6 +56,12 @@ export async function fetchForecastByCoords(lat, lon) {
 
     const conditions = await getWeather(lat, lon);
 
+    if (!conditions) {
+        // Rate-limit hit
+        return null;
+    }
+
+
     const dailyData = buildDailyDataFromOpenMeteo(conditions.daily);
 
     const { icon, label } = getWeatherIcon(conditions.weatherCode);

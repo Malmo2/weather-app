@@ -17,7 +17,6 @@ const forecastContainer = document.querySelector(".center-column");
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
 
-
 console.log("displayCity:", displayCity);
 console.log("displayTemp:", displayTemp);
 console.log("mainWeatherIcon:", mainWeatherIcon);
@@ -40,13 +39,20 @@ function initMap(lat, lon, cityName) {
 async function loadWeatherForCity(cityName) {
   try {
     const city = await getCity(cityName);
+
     if (!city.lat || !city.lon) {
-      showError("Could not find city. Please try another city.");
-      throw new Error("City not found");
+      showError("Could not find city. Please enter correct name or try another city.");
+      return;
     }
 
-    const { conditions, dailyData, sunrise, sunset } =
-      await fetchForecastByCoords(city.lat, city.lon);
+    //! if API raches limit, It would safely exit without crashing UI 
+    const forecastData = await fetchForecastByCoords(city.lat, city.lon);
+    if (!forecastData) {
+      showError("API request limit reahced, Please wait a moment....");
+      return; 
+    }
+
+    const { conditions, dailyData, sunrise, sunset } = forecastData;
 
     hourlyApp.render(conditions, sunrise, sunset);
     initMap(city.lat, city.lon, `${city.city}, ${city.country}`);
@@ -64,7 +70,6 @@ async function loadWeatherForCity(cityName) {
     console.log(detailsData);
     updateDetailsGrid(detailsData);
 
-
     const iconClass = conditions.icon ?? "fa-sun";
     const iconLabel = conditions.iconLabel ?? "Current weather";
 
@@ -81,12 +86,10 @@ async function loadWeatherForCity(cityName) {
 
     cityInput.value = "";
   } catch (err) {
-
     console.error("Could not fetch data", err);
     if (err && err.stack) {
       console.error(err.stack);
     }
-
 
     showError("Failed to load weather data.");
   }
@@ -115,3 +118,5 @@ let intervalId = setInterval(async () => {
     await loadWeatherForCity(currentCity);
   }
 }, 15 * 60 * 1000);
+
+
