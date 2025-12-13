@@ -9,6 +9,8 @@ import { updateWeatherCards } from "./js/weatherCards.js";
 import { showError } from "./js/utils/errorHandling.js";
 import { updateDetailsGrid } from "./js/data/updateDetails.js";
 import { buildDetailsData } from "./js/data/buildDetails.js";
+import { initCitySuggestions } from "./js/utils/citySuggestion.js";
+
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
@@ -36,9 +38,9 @@ function initMap(lat, lon, cityName) {
   L.marker([lat, lon]).addTo(map).bindPopup(cityName).openPopup();
 }
 
-async function loadWeatherForCity(cityName) {
+export async function loadWeatherForCity(cityName, countryName) {
   try {
-    const city = await getCity(cityName);
+    const city = await getCity(cityName, countryName);
 
     if (!city.lat || !city.lon) {
       showError("Could not find city. Please enter correct name or try another city.");
@@ -98,6 +100,8 @@ async function loadWeatherForCity(cityName) {
 displayHistory(loadWeatherForCity);
 removeHistory();
 initDarkMode();
+
+initCitySuggestions("searchInput", "citySuggestions"); // city suggestion droppdown..
 
 btn.addEventListener("click", async () => {
   const input = cityInput.value.trim();

@@ -1,39 +1,31 @@
 import { checkApiLimit } from "./utils/ApiFilter.js";
 
-export async function getCity(name) {
+export async function getCity(cityName, countryName) {
   try {
-    const split = name.trim().split(" ");
-    const cityName = split.slice(0, -1).join(" ");
-    const countryName = split.slice(-1).join(" ");
-    const finalCity = cityName || split[0];
-    const finalCountry = split.length > 1 ? countryName : undefined;
     const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
-      finalCity
+      cityName
     )}&count=50&language=en&format=json`;
+
     const res = await fetch(geoUrl);
-
     if (!res.ok) throw new Error("Could not fetch data");
-    const data = await res.json();
 
+    const data = await res.json();
     if (!data.results || data.results.length === 0) {
       return { city: null, country: null, lat: null, lon: null };
     }
+
     let result;
 
-    if (finalCountry === undefined) {
+    if (countryName === undefined) {
       result = data.results[0];
-      return {
-        city: result.name,
-        country: result.country,
-        lat: result.latitude,
-        lon: result.longitude,
-      };
+    } else {
+      result =
+        data.results.find(
+          (c) =>
+            c.country.toLowerCase() === countryName.toLowerCase()
+        ) || data.results[0]; // fallback if not found
     }
 
-    result =
-      data.results.find((c) =>
-        c.country.toLowerCase().includes(finalCountry.toLowerCase())
-      ) || data.results[0];
     return {
       city: result.name,
       country: result.country,
@@ -45,6 +37,7 @@ export async function getCity(name) {
     return { city: null, country: null, lat: null, lon: null };
   }
 }
+
 
 export async function getWeather(lat, lon) {
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation,rain,showers,snowfall&hourly=temperature_2m,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,uv_index_max&timezone=auto`;

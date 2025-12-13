@@ -147,6 +147,44 @@ body.dark-mode {
   color: #718096;
 }
 
+.city-suggestions-list {
+  list-style: none;
+  position: absolute;
+  top: 60px; /* adjust based on input height */
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+}
+
+.city-suggestions-list li {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.city-suggestions-list li:hover {
+  background-color: rgba(37, 99, 235, 0.08);
+}
+
+.dark-mode .city-suggestions-list {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #f4f7fb;
+}
+
+.dark-mode .city-suggestions-list li:hover {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+
 /* ================================
    HERO WEATHER SECTION
    ================================ */
