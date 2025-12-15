@@ -119,6 +119,6 @@ export function displayHistory(onCityClick) {
     itemWrapper.appendChild(removeBtn);
     historyContainer.appendChild(itemWrapper);
   });
-
-  console.log("HTML skapad!");
 }
+
+

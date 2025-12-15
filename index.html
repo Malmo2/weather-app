@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,76 +15,155 @@
     <button id="theme-toggle" aria-label="Toggle dark mode">
         <i class="fa-solid fa-moon"></i>
     </button>
-    
+
     <!-- Search Bar -->
     <div class="searchBar" role="search" aria-label="Weather search">
         <input type="text" id="searchInput" placeholder="Enter a city..." aria-label="search city">
         <button id="searchBtn" aria-label="Search">
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         </button>
+            <ul id="citySuggestions" class="city-suggestions-list" aria-label="City suggestions"></ul>
+
     </div>
+
+    <!-- error handling -->
+    <div id="errorMessage" class="error-message" role="alert" aria-live="polite"></div>
+
+    <!-- Hero Weather Display -->
     <!-- Hero Weather Display -->
     <section class="hero-weather" aria-live="polite">
         <i class="main-weather-icon fa-solid fa-cloud-sun" id="mainWeatherIcon" role="img"
             aria-label="Partly cloudy"></i>
         <div class="main-temp" id="mainTemp" aria-label="Current temperature">9°C</div>
         <h1 class="location" id="location">Malmö, Sweden</h1>
-        <div class="weather-stats" role="group" aria-label="Weather details">
-            <div class="stat-item">
-                <i class="fa-solid fa-droplet stat-icon" aria-hidden="true"></i>
-                <span class="stat-value" id="humidity">89%</span>
-                <span class="stat-label">Humidity</span>
+
+        <div class="weather-cards">
+            <!-- Card: Humidity -->
+            <div class="weather-card">
+                <i class="fa-solid fa-droplet card-icon"></i>
+                <p class="card-label">Humidity</p>
+                <p class="card-value humidity-value">--</p>
             </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-wind stat-icon" aria-hidden="true"></i>
-                <span class="stat-value" id="windSpeed">2 km/h</span>
-                <span class="stat-label">Wind Speed</span>
+
+            <!-- Card: UV Index -->
+            <div class="weather-card">
+                <i class="fa-solid fa-sun card-icon"></i>
+                <p class="card-label">UV Index</p>
+                <p class="card-value uv-value">--</p>
+            </div>
+
+            <!-- Card: Rain -->
+            <div class="weather-card">
+                <i class="fa-solid fa-cloud-rain card-icon"></i>
+                <p class="card-label">Rain</p>
+                <p class="card-value rain-value">--</p>
+            </div>
+
+            <!-- Card: Wind -->
+            <div class="weather-card">
+                <i class="fa-solid fa-wind card-icon"></i>
+                <p class="card-label">Wind</p>
+                <p class="card-value wind-value">--</p>
             </div>
         </div>
     </section>
-    <!-- Three Columns -->
-    <div class="three-column-grid">
-        <!-- Left: Map + Sunrise/Sunset -->
-        <section class="left-column">
-            <div class="map-card">
-                <h3 class="card-title">Map</h3>
-                <div id="map" class="map-container"></div>
+
+    <section class="hourly-forecast-section">
+        <h3 class="card-title">Hourly Forecast</h3>
+        <div id="hours" class="hourly-scroll"></div>
+    </section>
+
+    <section class="center-column" aria-labelledby="7-day forecast"></section>
+
+
+    <!-- DETAILS GRID -->
+
+    <section class="details-grid">
+        <div class="detail-card average-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-chart-line"></i> Average</span>
+                <i class="fa-solid fa-ellipsis"></i>
             </div>
-            <div class="sun-times-card" aria-labelledby="sunrise-heading">
-                <h3 class="card-title">Sunrise/Sunset</h3>
-                <div class="sun-time-row">
-                    <i class="fa-solid fa-sun sun-icon" aria-hidden="true"></i>
-                    <span class="sun-label">Sunrise</span>
-                    <span class="sun-value" id="sunrise">7:30</span>
-                </div>
+            <div class="card-value">+4°</div>
+            <div class="card-subtext">Above the daily highest average.</div>
+            <div class="average-stats">
+                <div class="avg-row"><span>Today</span> <span>T:10°</span></div>
+                <div class="avg-row"><span>Average</span> <span>T:10°</span></div>
             </div>
-            <div class="sun-times-card" aria-labelledby="sunset-heading">
-                <h3 class="card-title">Sunrise/Sunset</h3>
-                <div class="sun-time-row">
-                    <i class="fa-solid fa-moon sun-icon" aria-hidden="true"></i>
-                    <span class="sun-label">Sunset</span>
-                    <span class="sun-value" id="sunset">16:08</span>
-                </div>
+        </div>
+
+        <div class="detail-card feels-like-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-temperature-half"></i> Feels like"</span>
+                <i class="fa-solid fa-ellipsis"></i>
             </div>
-        </section>
-        <!--Center: 7-day forecast -->
-        <section class="center-column" aria-labelledby="7-day forecast">
-        </section>
-        <!-- Right: Search History -->
-        <section class="right-column">
-            <div class="history-card">
-                <h3 class="card-title">Hourly Forecast</h3>
-                <div id="hours"></div>
+            <div class="card-value">36°</div>
+            <div class="card-subtext">Feels hotter than the actual temperature</div>
+        </div>
+
+        <div class="detail-card uv-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-sun"></i> Index UV</span>
+                <i class="fa-solid fa-ellipsis"></i>
             </div>
-            <div class="history-card">
+            <div class="card-value">0</div>
+            <div class="uv-status">Low</div>
+            <div class="uv-bar">
+                <div class="uv-fill" style="width: 20%"></div>
+            </div>
+            <div class="card-subtext">Low throughout the day.</div>
+        </div>
+
+        <div class="detail-card visibility-card">
+            <div class="card-header">
+                <span><i class="fa-regular fa-eye"></i> Visibility</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">28 km</div>
+            <div class="card-subtext">The view is truly bright.</div>
+        </div>
+
+        <div class="detail-card humidity-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-droplet"></i> Humidity</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">76%</div>
+            <div class="card-subtext">The dew point is currently 24°C.</div>
+        </div>
+
+        <div class="detail-card pressure-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-gauge"></i> Pressure</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="pressure-gauge">
+                <div class="gauge-value">1.009 <span>hPa</span></div>
+            </div>
+        </div>
+
+        <div class="detail-card air-quality-card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-wind"></i> Air Quality</span>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="card-value">Normal</div>
+            <div class="card-subtext">Air quality is generally acceptable for most people. However, sensitive groups may
+                experience mild to moderate symptoms from long-term exposure.</div>
+            <button class="details-btn">See Details →</button>
+        </div>
+
+        <div class="detail-card precipitation-card">
+            <div id="map" class="map-container"></div>
+        </div>
+    </section>
+
+     <div class="history-card">
                 <h3 class="card-title">Search History</h3>
-                <button id="clearHistoryBtn" class="clear-btn">Clear History</button>
+                <button id="clearHistoryBtn" class="clear-btn" aria-label="Clear search history">Clear History</button>
                 <div class="history-list" id="historyList">
-                    <!-- JS HERE -->
                 </div>
             </div>
-        </section>
-    </div>
     <script src="maintest.js" type="module" defer></script>
 </body>
 
