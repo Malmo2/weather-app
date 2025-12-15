@@ -120,3 +120,5 @@ export function displayHistory(onCityClick) {
     historyContainer.appendChild(itemWrapper);
   });
 }
+
+
