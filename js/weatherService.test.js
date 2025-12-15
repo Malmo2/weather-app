@@ -15,8 +15,10 @@ describe("WeatherService", () => {
   });
 
   describe("getCity", () => {
+    // Tests for getCity function
     test("Should return city-data when API succeed", async () => {
       const mockResponse = {
+        // Mock API response
         results: [
           {
             name: "Stockholm",
@@ -28,8 +30,9 @@ describe("WeatherService", () => {
       };
 
       fetch.mockResolvedValueOnce({
+        // Mock fetch response
         ok: true,
-        json: async () => mockResponse,
+        json: async () => mockResponse, // Return mockResponse when json() is called
       });
 
       const result = await getCity("Stockholm");
@@ -40,9 +43,10 @@ describe("WeatherService", () => {
         lat: 59.3294,
         lon: 18.0686,
       });
-      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledTimes(1); // Ensure fetch was called once
     });
 
+    // Test for country filtering
     test("Should return country once countryName is called", async () => {
       const mockResponse = {
         results: [
@@ -72,6 +76,7 @@ describe("WeatherService", () => {
       expect(result.lat).toBe(48.8566);
     });
 
+    // Test for no results found
     test("Return null when no city is found", async () => {
       const mockResponse = {
         results: [],
@@ -92,6 +97,7 @@ describe("WeatherService", () => {
       });
     });
 
+    // Test for API error handling
     test("API handling", async () => {
       fetch.mockResolvedValueOnce({
         ok: false,
@@ -107,6 +113,7 @@ describe("WeatherService", () => {
       });
     });
 
+    // Test for network error handling
     test("Network error", async () => {
       fetch.mockRejectedValueOnce(new Error("Network error"));
 
