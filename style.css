@@ -156,7 +156,6 @@ body.dark-mode {
   max-height: 200px;
   overflow-y: auto;
   background-color: #ffffff;
-  border: 1px solid var(--border-subtle);
   border-radius: 12px;
   box-shadow: var(--shadow-soft);
   z-index: 100;
