@@ -83,7 +83,7 @@ export async function loadWeatherForCity(cityName, countryName) {
     forecastContainer.innerHTML = "";
     forecastContainer.appendChild(forecastElement);
 
-    addToHistory(city.city);
+    addToHistory(`${city.city}, ${city.country}`);
     displayHistory(loadWeatherForCity);
 
     cityInput.value = "";
