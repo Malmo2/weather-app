@@ -1,5 +1,25 @@
 
-// Local MP4 (looped & muted by the video element).
+/**
+ * @typedef {Object} BackgroundMediaMap
+ * @property {string[]} sun
+ * @property {string[]} clear
+ * @property {string[]} rain
+ * @property {string[]} fog
+ * @property {string[]} thunder
+ * @property {string[]} snow
+ * @property {string[]} cloudy
+ * @property {string[]} hail
+ * @property {string[]} fallback
+ *
+ * Groups correspond to a simplified weather grouping the UI uses for visuals.
+ * Each array holds local asset paths; one is selected at random when applied.
+ */
+
+/**
+ * Local MP4 (looped & muted by the video element).
+ * Used first, with WEBP image fallback when video cannot be played.
+ * @type {BackgroundMediaMap}
+ */
 const LOCAL_VIDEO_BY_GROUP = {
   sun: ["constants/backgrounds/sun/sun.mp4"],
   clear: ["constants/backgrounds/clear/clear.mp4"],
@@ -12,7 +32,10 @@ const LOCAL_VIDEO_BY_GROUP = {
   fallback: ["constants/backgrounds/fallback/fallback.mp4"],
 };
 
-// Local WEBP backgrounds to use if video is unavailable.
+/**
+ * Local WEBP backgrounds to use if video is unavailable.
+ * @type {BackgroundMediaMap}
+ */
 const LOCAL_WEBP_BY_GROUP = {
   sun: [
     "constants/backgrounds/sun/sun.webp",
@@ -136,6 +159,8 @@ function setBodyVideo(videoUrl, fallbackImageUrl) {
 /**
  * Maps Open-Meteo weather codes to a high-level condition group.
  * Groups are kept small so you can easily assign your own Pexels media.
+ * @param {number|string} code - WMO weather code from the API.
+ * @returns {"sun"|"clear"|"rain"|"fog"|"thunder"|"snow"|"cloudy"} Group name.
  */
 export function mapWeatherCodeToConditionGroup(code) {
   const numericCode = Number(code);
@@ -182,6 +207,11 @@ export function mapWeatherCodeToConditionGroup(code) {
 /**
  * Sets background using local media mapped from weather code.
  * @param {number} weatherCode - The WMO weather code.
+ * @returns {Promise<void>} Resolves after the media is applied.
+ *
+ * Picks a video first (looped, muted, full-viewport). If the video fails
+ * to load or stalls, the corresponding WEBP fallback is applied. If neither
+ * is found, the existing background is cleared.
  */
 export async function setBackgroundFromWeatherCode(weatherCode) {
   const group = mapWeatherCodeToConditionGroup(weatherCode);
