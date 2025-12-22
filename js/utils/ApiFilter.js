@@ -4,7 +4,7 @@
 const apiLimitLog = {};
 
 // Block identical URL calls within this window (milliseconds).
-const THROTTLE_WINDOW_MS = 60_000; // 60 seconds
+const THROTTLE_WINDOW_MS = 10_000; // 60 seconds
 
 export function checkApiLimit(weatherUrl) {
     if (apiLimitLog[weatherUrl]) {
