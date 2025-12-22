@@ -16,6 +16,11 @@ const WEATHER_ICON_MAP = [
 
 const DEFAULT_ICON = { icon: "fa-sun", label: "Clear sky" };
 
+/**
+ * Returnerar ikon och label för en given väderkod.
+ * @param {number|string} code - WMO-kod från Open-Meteo.
+ * @returns {{icon: string, label: string}} Objekt med `icon` och `label`.
+ */
 export function getWeatherIcon(code) {
     const numericCode = Number(code);
     if (Number.isNaN(numericCode)) {
@@ -28,6 +33,10 @@ export function getWeatherIcon(code) {
         DEFAULT_ICON;
     return mapping;
 }
+/**
+ * @param {Object} daily - Objekt som kommer från Open-Meteo (daily).
+ * @returns {Array} Array med dagliga objekt (dt, temp, weather, sunrise, sunset).
+ */
 export function buildDailyDataFromOpenMeteo(daily) {
     const out = [];
 
@@ -52,6 +61,12 @@ export function buildDailyDataFromOpenMeteo(daily) {
     }
     return out;
 }
+/**
+ * Hämtar prognosdata för givna koordinater.
+ * @param {number} lat - Breddgrad.
+ * @param {number} lon - Längdgrad.
+ * @returns {Promise<Object|null>} Objekt med `conditions`, `dailyData`, `sunrise`, `sunset` eller null.
+ */
 export async function fetchForecastByCoords(lat, lon) {
 
     const conditions = await getWeather(lat, lon);

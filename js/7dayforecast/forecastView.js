@@ -1,5 +1,17 @@
+/**
+ * @typedef {Object} DayForecast
+ * @property {number} dt - Unix timestamp i sekunder för dagen.
+ * @property {{min?: number, max?: number, day?: number, eve?: number, night?: number, morn?: number}|number} [temp]
+ *   - Temperaturobjekt (föredraget) eller enkel siffra. Fält som `min`, `max`, `day`, `eve`, `night` eller `morn` kan förekomma.
+ * @property {Array<{description?: string, icon?: string}>} [weather] - Array med väderbeskrivningar (beskrivning och ikon).
+ *
+ * Renderar ett DOM-element som visar upp till 7 dagars prognos.
+ *
+ * @param {DayForecast[]} [dailyData=[]] - Array med dagliga prognosobjekt (endast de första 7 används).
+ * @returns {HTMLElement} Ett `section`-element med klass `seven-day-forecast` innehållande prognosartiklar.
+ */
 export function forecast(dailyData = []) {
-  const container = document.createElement("section");
+  const container =document.createElement("section");
   container.className = "seven-day-forecast";
 
   const header = document.createElement("div");
