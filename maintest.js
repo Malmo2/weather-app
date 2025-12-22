@@ -10,6 +10,7 @@ import { showError } from "./js/utils/errorHandling.js";
 import { updateDetailsGrid } from "./js/data/updateDetails.js";
 import { buildDetailsData } from "./js/data/buildDetails.js";
 import { initCitySuggestions } from "./js/utils/citySuggestion.js";
+import { setPexelsBackgroundFromWeatherCode } from "./js/backgroundService.js";
 
 
 const displayCity = document.getElementById("location");
@@ -51,7 +52,7 @@ export async function loadWeatherForCity(cityName, countryName) {
     const forecastData = await fetchForecastByCoords(city.lat, city.lon);
     if (!forecastData) {
       showError("API request limit reahced, Please wait a moment....");
-      return; 
+      return;
     }
 
     const { conditions, dailyData, sunrise, sunset } = forecastData;
@@ -78,6 +79,12 @@ export async function loadWeatherForCity(cityName, countryName) {
     mainWeatherIcon.className = `main-weather-icon fa-solid ${iconClass}`;
     mainWeatherIcon.setAttribute("aria-label", iconLabel);
     mainWeatherIcon.setAttribute("title", iconLabel);
+
+    try {
+      await setPexelsBackgroundFromWeatherCode(conditions.weatherCode);
+    } catch (backgroundErr) {
+      console.error("Could not update background:", backgroundErr);
+    }
 
     const forecastElement = forecast(dailyData);
     forecastContainer.innerHTML = "";

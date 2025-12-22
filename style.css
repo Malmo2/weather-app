@@ -27,15 +27,21 @@
    ================================ */
 body {
   min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   background-color: var(--bg-light);
   color: var(--text-main);
-  padding: 20px;
 }
 
-body > * {
-  max-width: 960px;
-  margin: 0 auto;
+.app-shell {
   width: 100%;
+  max-width: 1440px;
+  margin: auto;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* ================================
@@ -84,17 +90,23 @@ body.dark-mode {
 /* ================================
    TOP SEARCH BAR
    ================================ */
+.top-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .searchBar {
   position: relative;
   max-width: 520px;
-  margin: 30px auto 40px;
+  margin: 0 auto;
 }
 
 .error-message {
   color: #fff;
   background-color: #e74c3c;
   padding: 0.5rem 1rem;
-  margin: 1rem auto;
+  margin: 0 auto;
   border-radius: 5px;
   display: none;
 
@@ -150,7 +162,8 @@ body.dark-mode {
 .city-suggestions-list {
   list-style: none;
   position: absolute;
-  top: 60px; /* adjust based on input height */
+  top: 60px;
+  /* adjust based on input height */
   left: 0;
   right: 0;
   max-height: 200px;
@@ -188,6 +201,8 @@ body.dark-mode {
    HERO WEATHER SECTION
    ================================ */
 .hero-weather {
+  grid-column: 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -195,8 +210,7 @@ body.dark-mode {
   gap: 10px;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 40px 32px;
-  margin-bottom: 32px;
+  padding: 32px 28px;
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
   background-color: var(--bg-card);
 }
@@ -212,7 +226,7 @@ body.dark-mode {
 }
 
 .main-temp {
-  font-size: 72px;
+  font-size: 68px;
   font-weight: 700;
   line-height: 1;
 }
@@ -301,11 +315,12 @@ body.dark-mode {
    HOURLY FORECAST STRIP
    ================================ */
 .hourly-forecast-section {
+  grid-column: 1;
+  grid-row: 2;
   background-color: #ffffff;
   border: 1px solid #d1d5db;
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 32px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
 }
@@ -428,13 +443,34 @@ body.dark-mode {
 }
 
 /* ================================
-   THREE-COLUMN GRID SECTION
+   LAYOUT GRID
    ================================ */
-.three-column-grid {
+.dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  grid-template-columns: minmax(760px, 2fr) minmax(340px, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+}
+
+.side-column {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.air-map-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.side-column .detail-card,
+.side-column .history-card,
+.side-column .center-column {
+  width: 100%;
 }
 
 .map-card,
@@ -497,7 +533,6 @@ body.dark-mode {
   border: 1px solid #d1d5db;
   border-radius: 12px;
   padding: 20px;
-  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
 }
@@ -658,6 +693,7 @@ body.dark-mode {
    ================================ */
 .history-card {
   position: relative;
+  box-shadow: var(--shadow-soft);
 }
 
 .clear-btn {
@@ -767,20 +803,23 @@ body.dark-mode .history-item-remove:hover {
    DETAILS GRID (BOTTOM SECTION)
    ================================ */
 .details-grid {
+  grid-column: 1;
+  grid-row: 3;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
 }
 
 .detail-card {
-  background: #f8f9fc;
-  padding: 1.2rem;
+  background: #ffffff;
+  padding: 1rem;
   border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 160px;
+  min-height: 150px;
+  border: 1px solid #e5e7eb;
+  box-shadow: var(--shadow-soft);
 }
 
 .card-header {
@@ -890,7 +929,7 @@ body.dark-mode .history-item-remove:hover {
 
 .precipitation-card .map-container {
   margin-top: 0;
-  height: 100%;
+  height: 180px;
   border-radius: 12px;
 }
 
@@ -917,13 +956,11 @@ body.dark-mode .history-item-remove:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: repeating-linear-gradient(
-    45deg,
-    #e0e0e0 0,
-    #e0e0e0 1px,
-    transparent 0,
-    transparent 50%
-  );
+  background-image: repeating-linear-gradient(45deg,
+      #e0e0e0 0,
+      #e0e0e0 1px,
+      transparent 0,
+      transparent 50%);
   background-size: 10px 10px;
   opacity: 0.3;
   z-index: 1;
@@ -932,6 +969,17 @@ body.dark-mode .history-item-remove:hover {
 /* ================================
    RESPONSIVE TWEAKS
    ================================ */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-column {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
 @media (min-width: 768px) {
   .details-grid {
     grid-template-columns: repeat(3, 1fr);

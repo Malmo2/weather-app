@@ -6,5 +6,5 @@ export function showError(message) {
 
     setTimeout(() => {
         errorEl.style.display = 'none';
-    }, 5000); 
+    }, 5000);
 }

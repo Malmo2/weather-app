@@ -1,27 +1,38 @@
-import { feelsLikeData } from "../../newjs/classes/feelslikeData.js";
-import { pressureVisibilityData } from "../../newjs/classes/pressureVisibilityData.js";
-import { airQualityData } from "../../newjs/classes/airQualityData.js";
+import { feelsLikeData } from "../classes/feelslikeData.js";
+import { pressureVisibilityData } from "../classes/pressureVisibilityData.js";
+import { airQualityData } from "../classes/airQualityData.js";
 
 export async function buildDetailsData(conditions, dailyData, city) {
     let feels = { currentFeelsLike: conditions.feelsLike ?? conditions.temp ?? 0 };
 
     let pressureVisibility = {
         pressure: conditions.pressure ?? 1013,
-        visibility: conditions.visibilityKm ?? 10,
+        visibilityKm: conditions.visibilityKm ?? 10,
     };
 
     let airQuality = { pm10: 0, pm25: 0 };
 
-    try {
-        feels = await feelsLikeData();
-    } catch (e) {
-        console.error("feelsLikeData failed", e);
+    // If the main weather call already provided a "feels like" value, don't make an extra request.
+    if (typeof conditions.feelsLike !== "number") {
+        try {
+            // Use the selected city coordinates (the old version was hard-coded to Berlin).
+            feels = await feelsLikeData(city.lat, city.lon);
+        } catch (e) {
+            console.error("feelsLikeData failed", e);
+        }
     }
 
-    try {
-        pressureVisibility = await pressureVisibilityData(city.lat, city.lon);
-    } catch (e) {
-        console.error("pressureVisibilityData failed", e);
+    // Same idea for pressure/visibility/dew point: only fetch if missing.
+    if (
+        typeof conditions.pressure !== "number" ||
+        typeof conditions.visibilityKm !== "number" ||
+        typeof conditions.dewPoint !== "number"
+    ) {
+        try {
+            pressureVisibility = await pressureVisibilityData(city.lat, city.lon);
+        } catch (e) {
+            console.error("pressureVisibilityData failed", e);
+        }
     }
 
     try {
@@ -83,17 +94,19 @@ export async function buildDetailsData(conditions, dailyData, city) {
     if (uvPercent > 100) uvPercent = 100;
     if (uvPercent < 0) uvPercent = 0;
 
-    const visibility = pressureVisibility.visibility ?? 10;
+    const visibility = pressureVisibility.visibilityKm ?? 10;
     const visibilityText = "Current horizontal visibility.";
 
     const humidity = conditions.humidity ?? 0;
 
+    const dewPoint =
+        typeof conditions.dewPoint === "number"
+            ? conditions.dewPoint
+            : pressureVisibility.dewPoint;
+
     let dewPointText = "Dew point data unavailable.";
-    if (typeof conditions.dewPoint === "number") {
-        dewPointText =
-            "The dew point is currently " +
-            Math.round(conditions.dewPoint) +
-            "°C.";
+    if (typeof dewPoint === "number") {
+        dewPointText = `The dew point is currently ${Math.round(dewPoint)}°C.`;
     }
 
     const pressure = pressureVisibility.pressure ?? 1013;
