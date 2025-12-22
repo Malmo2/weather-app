@@ -613,6 +613,7 @@ body.dark-mode {
   border-radius: 8px;
   flex-shrink: 0;
   text-align: center;
+  background-color: rgba(37, 99, 235, 0.08);
 }
 
 .forecast-day-name {
