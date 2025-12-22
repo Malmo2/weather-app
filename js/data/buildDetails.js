@@ -119,7 +119,6 @@ export async function buildDetailsData(conditions, dailyData, city) {
                 ? "Moderate"
                 : "Poor";
 
-    const airQualityDescription = `PM10: ${airQuality.pm10}, PM2.5: ${airQuality.pm25}`;
 
     return {
         avgDelta,
@@ -137,6 +136,5 @@ export async function buildDetailsData(conditions, dailyData, city) {
         pressure,
         pressureUnit,
         airQualityStatus,
-        airQualityDescription,
     };
 }
