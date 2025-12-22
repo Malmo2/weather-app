@@ -10,7 +10,7 @@ import { showError } from "./js/utils/errorHandling.js";
 import { updateDetailsGrid } from "./js/data/updateDetails.js";
 import { buildDetailsData } from "./js/data/buildDetails.js";
 import { initCitySuggestions } from "./js/utils/citySuggestion.js";
-import { setPexelsBackgroundFromWeatherCode } from "./js/backgroundService.js";
+import { setBackgroundFromWeatherCode } from "./js/backgroundService.js";
 
 
 const displayCity = document.getElementById("location");
@@ -81,7 +81,7 @@ export async function loadWeatherForCity(cityName, countryName) {
     mainWeatherIcon.setAttribute("title", iconLabel);
 
     try {
-      await setPexelsBackgroundFromWeatherCode(conditions.weatherCode);
+      await setBackgroundFromWeatherCode(conditions.weatherCode);
     } catch (backgroundErr) {
       console.error("Could not update background:", backgroundErr);
     }
