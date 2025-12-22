@@ -15,7 +15,7 @@ export async function buildDetailsData(conditions, dailyData, city) {
     // If the main weather call already provided a "feels like" value, don't make an extra request.
     if (typeof conditions.feelsLike !== "number") {
         try {
-            // Use the selected city coordinates (the old version was hard-coded to Berlin).
+            // Use the selected city coordinates.
             feels = await feelsLikeData(city.lat, city.lon);
         } catch (e) {
             console.error("feelsLikeData failed", e);
