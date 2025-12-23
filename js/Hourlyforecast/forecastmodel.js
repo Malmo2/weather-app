@@ -1,7 +1,16 @@
 import { getWeatherIcon } from "../7dayforecast/7dayforecast.js";
 
+/**
+ * Modell för timprognos som hämtar de närmaste timmarna.
+ */
 export class Forecastmodel {
 
+    /**
+     * Hämta de kommande timmarna från Open-Meteo.
+     * @param {Object} get - Objekt från vädertjänsten som innehåller `hourly` med `time` och `temperature_2m`.
+     * @param {number} [count=11] - Max antal timmar som returneras.
+     * @returns {Array<{date: Date, temp: number, icon: string, iconLabel: string}>} En array med förenklade timobjekt.
+     */
     static getNextHours(get, count = 11) {
         const times = get.hourly.time;
         const temps = get.hourly.temperature_2m;
