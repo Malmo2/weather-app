@@ -1,15 +1,27 @@
 const historyKey = "searchHistory";
 const historyLimit = 3;
 
+/**
+ *
+ * @returns {string[]} Array with cities
+ */
 export function getHistory() {
   const history = localStorage.getItem(historyKey);
   return history ? JSON.parse(history) : [];
 }
 
+/**
+ * Saves history in localStorage
+ * @param {string[]} history - array that saves cities
+ */
 function saveHistory(history) {
   localStorage.setItem(historyKey, JSON.stringify(history));
 }
 
+/**
+ * Adding a city into search history.
+ * @param {string} city to add.
+ */
 export function addToHistory(city) {
   try {
     let history = getHistory();
@@ -31,6 +43,11 @@ export function addToHistory(city) {
   }
 }
 
+/**
+ * Delete a city from search history
+ * @param {string} cityToRemove
+ * @returns {boolean} True if succeed, false if error occured.
+ */
 export function removeFromHistory(cityToRemove) {
   try {
     let history = getHistory();
@@ -51,6 +68,11 @@ export function removeFromHistory(cityToRemove) {
   }
 }
 
+/**
+ * Show search history with a onclick function.
+ * @param {Function} onCityClick - callback function that runs once you cloick on a city
+ * @returns
+ */
 export function displayHistory(onCityClick) {
   let historyContainer = document.getElementById("historyList");
   if (!historyContainer) {
