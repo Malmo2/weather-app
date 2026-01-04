@@ -39,6 +39,20 @@ function initMap(lat, lon, cityName) {
   L.marker([lat, lon]).addTo(map).bindPopup(cityName).openPopup();
 }
 
+/**
+ * Loads weather for a city name (optionally with a country), then updates the UI:
+ * - fetches city coordinates
+ * - fetches forecast data by coordinates
+ * - renders hourly + daily forecast
+ * - updates map, main temperature/icon, cards, details grid, background, and search history
+ *
+ * If the city is not found or the forecast API returns no data (e.g. rate limit), it shows an error and exits.
+ *
+ * @param {string} cityName - City name to search for (e.g. "Berlin")
+ * @param {string} [countryName] - Optional country name to narrow the search (e.g. "Sweden")
+ * @returns {Promise<void>} Resolves when UI updates finish (or exits early after showing an error)
+ */
+
 export async function loadWeatherForCity(cityName, countryName) {
   try {
     const city = await getCity(cityName, countryName);
