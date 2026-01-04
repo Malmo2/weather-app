@@ -1,9 +1,20 @@
 import { pressureVisibilityAPI } from "../api/pressureVisibilityAPI.js";
 
-// Small data-wrapper that normalizes Open-Meteo's units for the UI.
-// - surface_pressure: hPa
-// - visibility: meters (we convert to km)
-// - dew_point_2m: °C
+/**
+ * Air pressure, visibility and dewPoint data.
+ * @typedef {Object} PressureVisibilityDewPointData
+ * @property {number} pressure - Surface atmospheric pressure in hPa.
+ * @property {number} visibilityMeters - Horizontal visibility distance in meters (raw API value).
+ * @property {number} visibilityKm - Visibility distance converted to kilometers (rounded to 1 decimal).
+ * @property {number|null} dewPoint - Dew point temperature in degrees Celcius, or null if unavailable.
+ */
+
+/**
+ * Fetches pressure, visibility and dew point data.
+ * @param {number} latitude - Geographic latitude.
+ * @param {number} longitude - Geographic longitude.
+ * @returns {Promise<PressureVisibilityDewPointData>} - pressure, visibilityKm and dewPoint values.
+ */
 
 export async function pressureVisibilityData(latitude, longitude) {
     const data = await pressureVisibilityAPI(latitude, longitude);
