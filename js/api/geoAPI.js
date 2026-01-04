@@ -1,4 +1,9 @@
-
+/**
+ * Fetches raw geographic location data for a given city name from the Open-Meteo Geocoding API.
+ *
+ * @param {string} cityName - Name of the city to search for
+ * @returns {Promise<Object|null>} Raw geocoding API response, or null if the request fails
+ */
 
 export async function getGeo(cityName) {
     try {
