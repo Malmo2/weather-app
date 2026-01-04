@@ -1,6 +1,16 @@
 import { getGeo } from "../api/geoAPI.js";
 import { getWeather } from "./weatherClass.js";
 
+/**
+ * Extracts city data from a search string and enriches each city with weather data.
+ *
+ * The search string may contain a city name and an optional country name.
+ * The function returns up to three matching cities.
+ * 
+ * @param {string} search - A user-provided location search string.
+ * @returns {Promise<City[]>} - Array of City instances with weather data attached.
+ */
+
 export async function extractGeo(search) {
 
     const split = search.trim().split(" ");
@@ -34,6 +44,16 @@ export async function extractGeo(search) {
 
     return cities;
 };
+
+/**
+ * 
+ * @class
+ * @property {string} name - City name.
+ * @property {number} latitude - Geographical latitude.
+ * @property {number} longitude - Geographical longitude.
+ * @property {string} country - Country name.
+ * @property {Weather|null} weather - Weather data for the city, null if not loaded.
+ */
 
 export class City {
     constructor(city) {
