@@ -1,5 +1,17 @@
 import { solarAPI } from "../api/solarAPI.js";
 
+/**
+ * Normalized current solar values.
+ *
+ * @class
+ * @property {number} sunrise - Sunrise time (Unix timestamp or ISO string, depending on API)
+ * @property {number} sunset - Sunset time (Unix timestamp or ISO string, depending on API)
+ * @property {number} daylightDuration - Total daylight duration in seconds
+ * @property {number} sunshineDuration - Sunshine duration in seconds
+ * @property {number} uvIndex - Maximum UV index
+ * @property {number} uvIndexClear - Maximum clear-sky UV index
+ */
+
 
 export class SolarClass {
     constructor(solar) {
@@ -11,6 +23,15 @@ export class SolarClass {
         this.uvIndexClear = solar.uvIndexClear;
     }
 }
+
+/**
+ * Fetches daily solar data and converts it into an array of SolarClass instances.
+ *
+ * Each array element represents one day and contains normalized solar values
+ * such as sunrise, sunset, daylight duration, and UV index.
+ *
+ * @returns {Promise<SolarClass[]>} Array of normalized daily solar data
+ */
 
 
 export async function solarData() {
