@@ -1,7 +1,20 @@
 
 import { getPrecipitation } from "../api/precipitationAPI.js";
 
-export class precipitationClass {
+/**
+ * Normalized precipitation values.
+ *
+ * @class
+ * @property {number} precipitationProbability - Probability of precipitation in percent
+ * @property {number} precipitationData - Total precipitation amount (mm)
+ * @property {number} precipitationRain - Rainfall amount (mm)
+ * @property {number} precipitationShowers - Shower precipitation amount (mm)
+ * @property {number} precipitationSnowfall - Snowfall amount (mm)
+ * @property {number} precipitationSnowDepth - Snow depth (cm)
+ * 
+ */
+
+export class PrecipitationClass {
     constructor(precipitation) {
         this.precipitationProbability = precipitation.precipitationProbability;
         this.precipitationData = precipitation.precipitationData;
@@ -12,6 +25,11 @@ export class precipitationClass {
 
     }
 }
+
+/**
+ * Fetches current precipitation data and returns normalized precipitation values.
+ * @returns {Promise<PrecipitationClass>} 
+ */
 
 export async function precipitationData() {
     const data = await getPrecipitation();
