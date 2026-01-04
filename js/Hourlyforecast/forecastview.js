@@ -1,9 +1,18 @@
+/**
+ * Timprognos som renderar timkort i en container.
+ */
 export class forecastView {
     constructor(container) {
         this.container = container;
 
     }
 
+    /**
+     * Renderar en lista med timkort i containern.
+     * @param {Array<{date: Date, temp: number, icon?: string, iconLabel?: string}>} hours - Array med timobjekt.
+     * @param {string|number|null} sunrise - Soluppgångstid.
+     * @param {string|number|null} sunset - Solnedgångstid.
+     */
     render(hours, sunrise, sunset) {
         this.container.innerHTML = "";
 
@@ -18,7 +27,6 @@ export class forecastView {
             const iconClass = h.icon ?? "fa-sun";
             const iconLabel = h.iconLabel ?? "Weather condition";
 
-            // Check if sunrise or sunset occurs in this hour
             const hourStart = new Date(h.date);
             const hourEnd = new Date(h.date.getTime() + 60 * 60 * 1000);
 
