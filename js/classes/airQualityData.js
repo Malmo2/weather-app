@@ -1,7 +1,19 @@
 import { airQualityAPI } from "../api/airQualityAPI.js";
 
-// Returns current PM10 + PM2.5 values (µg/m³) when available.
-// If the API fails or doesn't provide the fields, we return zeros so the UI doesn't crash.
+/**
+ * Normalized air quality particulate data.
+ * 
+ * @typedef {Object} AirQualityPM
+ * @property {number} pm10 - PM10 Particulate concentration.
+ * @property {number} pm25 - PM2.5 particulate concentration.
+ */
+
+/**
+ * Fetches air quality data.
+ * @param {number} latitude - Geographic latitude.
+ * @param {number} longitude - Geographic longitude.
+ * @returns {Promise<AirQualityPM>} - PM10 and PM2.5 Values.
+ * */
 
 export async function airQualityData(latitude, longitude) {
     const data = await airQualityAPI(latitude, longitude);

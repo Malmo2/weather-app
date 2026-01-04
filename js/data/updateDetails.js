@@ -23,6 +23,31 @@ const airQualityValue = document.querySelector('.air-quality-card .card-value');
 const airQualityText = document.querySelector('.air-quality-card .card-subtext');
 const airQualityDetailsBtn = document.querySelector('.air-quality-card .details-btn');
 
+/**
+ * @typedef {Object} DetailsGridData
+ * @property {number} avgDelta - Difference between today's average and normal average temperature
+ * @property {number} todayAvg - Today's average temperature
+ * @property {number} normalAvg - Normal average temperature
+ * @property {number} feelsLike - Feels-like temperature
+ * @property {string} feelsLikeText - Description of how the temperature feels
+ * @property {number} uvIndex - UV index value
+ * @property {string} uvStatus - Text status for UV level (low, moderate, high)
+ * @property {number} uvPercent - UV level as a percentage (used for bar width)
+ * @property {number} visibility - Visibility distance in kilometers
+ * @property {string} visibilityText - Description of visibility conditions
+ * @property {number} humidity - Humidity percentage
+ * @property {string} dewPointText - Dew point description
+ * @property {number} pressure - Atmospheric pressure value
+ * @property {string} pressureUnit - Unit for pressure (e.g. hPa, mb)
+ * @property {string} airQualityStatus - Overall air quality status
+ * @property {string} airQualityDescription - Description of air quality
+ */
+
+/**
+ * Updates the weather details grid UI with new data.
+ *
+ * @param {DetailsGridData} data - Weather data used to populate the details cards
+ */
 export function updateDetailsGrid(data) {
     const delta = data.avgDelta;
     avgDelta.textContent = `${delta > 0 ? "+" : ""}${delta}°`;

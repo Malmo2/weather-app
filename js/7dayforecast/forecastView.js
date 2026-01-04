@@ -22,7 +22,7 @@ export function forecast(dailyData = []) {
 
   const subtitle = document.createElement("span");
   subtitle.className = "forecast-subtitle";
-  subtitle.textContent = "Daily overview";
+
 
   header.append(title, subtitle);
   container.appendChild(header);
