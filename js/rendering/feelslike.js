@@ -1,5 +1,9 @@
 
-
+/**
+ * Creates and renders feels-like temperature data in the DOM.
+ * @param {FeelsLikeClass} feelslike - Normalized feels-like temperature data.
+ * @returns {HTMLElement} - The container element holding the feels-like card.
+ */
 
 export function createFeelslike(feelslike) {
 

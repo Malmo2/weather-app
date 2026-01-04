@@ -28,7 +28,7 @@ export class PrecipitationClass {
 
 /**
  * Fetches current precipitation data and returns normalized precipitation values.
- * @returns {Promise<PrecipitationClass>} 
+ * @returns {Promise<PrecipitationClass | null>}
  */
 
 export async function precipitationData() {
@@ -50,7 +50,7 @@ export async function precipitationData() {
         precipitationSnowDepth: hourly.snow_depth[index]
     };
 
-    const precipitation = new precipitationClass(precipitationObj);
+    const precipitation = new PrecipitationClass(precipitationObj);
 
     return precipitation;
 

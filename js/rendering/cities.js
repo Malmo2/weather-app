@@ -1,3 +1,12 @@
+/**
+ * Creates and renders city weather cards in the DOM.
+ *
+ * Each city is displayed with its name, country, and basic weather information.
+ *
+ * @param {City[]} cities - Array of City instances with weather data attached
+ * @returns {void}
+ */
+
 export function createCities(cities) {
 
     const cont = document.getElementById("results");

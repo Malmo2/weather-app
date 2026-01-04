@@ -1,4 +1,12 @@
 
+/**
+ * Creates and renders solar data cards in the DOM.
+ *
+ * Each item in the array represents one day of solar data.
+ *
+ * @param {SolarClass[]} solarArray - Array of normalized solar data objects
+ * @returns {HTMLElement} The container element holding the rendered solar cards
+ */
 
 export function createSolarData(solarArray) {
 

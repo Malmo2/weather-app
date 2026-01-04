@@ -1,3 +1,10 @@
+/**
+ * Creates and renders precipitation data cards in the DOM.
+ * 
+ * Each item is appeded to an html element.
+ * @param {PrecipitationClass} precipitation - Normalized precipitation data.
+ * @returns {HTMLElement} The container element holding the precipitation card.
+ */
 
 
 
@@ -24,13 +31,13 @@ export function createPrecipitation(precipitation) {
 
 
     card.append(displayPrecProbability,
-         displayPrec,
-          displayPrecRain,
-           displayPrecShowers,
-            displayPrecSnowfall,
-             displayPrecSnowDepth);
+        displayPrec,
+        displayPrecRain,
+        displayPrecShowers,
+        displayPrecSnowfall,
+        displayPrecSnowDepth);
 
-             precipitationResults.appendChild(card);
+    precipitationResults.appendChild(card);
 
     return precipitationResults;
 }
