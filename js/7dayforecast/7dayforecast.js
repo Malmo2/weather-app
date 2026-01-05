@@ -1,4 +1,4 @@
-import { getWeather } from "../weatherService.js";
+import { getWeather } from "../weatherService.js"; // go up to js/, then use weatherService.js
 
 
 const WEATHER_ICON_MAP = [
@@ -70,12 +70,6 @@ export function buildDailyDataFromOpenMeteo(daily) {
 export async function fetchForecastByCoords(lat, lon) {
 
     const conditions = await getWeather(lat, lon);
-
-    if (!conditions) {
-        // Rate-limit hit
-        return null;
-    }
-
 
     const dailyData = buildDailyDataFromOpenMeteo(conditions.daily);
 
