@@ -1,4 +1,4 @@
-import { getWeather } from "../weatherService.js";
+import { getWeather } from "../weatherService.js"; // go up to js/, then use weatherService.js
 
 
 const WEATHER_ICON_MAP = [
@@ -18,7 +18,7 @@ const DEFAULT_ICON = { icon: "fa-sun", label: "Clear sky" };
 
 /**
  * Returnerar ikon och label för en given väderkod.
- * @param {number|string} code - WMO-kod från Open-Meteo.
+ * @param {number|string} code - WMO-kod från Open-Meteo.git 
  * @returns {{icon: string, label: string}} Objekt med `icon` och `label`.
  */
 export function getWeatherIcon(code) {
@@ -70,12 +70,6 @@ export function buildDailyDataFromOpenMeteo(daily) {
 export async function fetchForecastByCoords(lat, lon) {
 
     const conditions = await getWeather(lat, lon);
-
-    if (!conditions) {
-        // Rate-limit hit
-        return null;
-    }
-
 
     const dailyData = buildDailyDataFromOpenMeteo(conditions.daily);
 
