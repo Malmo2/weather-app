@@ -32,6 +32,7 @@ Ett webbprojekt för att söka och visa väderdata via Open‑Meteo, med en enke
 
 ## Kör lokalt (snabbt)
 
+
 1. Öppna `index.html` i din webbläsare (dubbelklick eller via Live Server i VS Code).
 
 eller
