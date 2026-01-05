@@ -1,5 +1,18 @@
 import { loadWeatherForCity } from "../../maintest.js";
 
+/**
+ * Initializes city search suggestions using the Open-Meteo Geocoding API.
+ *
+ * @param {string} inputId - ID of the text input element
+ * @param {string} listId - ID of the suggestion list container
+ *
+ * Features:
+ * - Fetches city suggestions while typing
+ * - Uses debounce to reduce API calls
+ * - Prevents duplicate city entries
+ * - Allows user to select a city and load weather data
+ */
+
 export function initCitySuggestions(inputId, listId) {
     const input = document.getElementById(inputId);
     const list = document.getElementById(listId);
