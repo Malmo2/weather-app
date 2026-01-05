@@ -48,31 +48,49 @@ eller
 
 ---
 
-## Tester 🧪
+## Tester (Jest) 🧪
 
-Testfilernas plats: `js/tests/`.
+- Testfiler: `js/tests/`
 
-Kör testerna (lokalt):
+- Installera dev‑dependencies:
 
 ```bash
 npm install
+```
+
+- Kör alla tester:
+
+```bash
 npm test
 ```
 
-Testskriptet i `package.json` använder Jest (JSDOM). Om du inte kör Node-tester behöver du inte installera något för att köra appen i webbläsaren.
+- Kör i watch‑läge
+
+```bash
+npm test -- --watch
+```
+
+- Kör en specifik test
+
+```bash
+npm test -- -t "del av testnamn"
+```
+
+- Kör med coverage:
+
+```bash
+npm test -- --coverage
+```
 
 ---
 
-## API:er & nycklar 🌐
+## API:er & nycklar
 
 - Geokodning: `https://geocoding-api.open-meteo.com/v1/search`
 - Prognos: `https://api.open-meteo.com/v1/forecast`
 - Luftkvalitet: `https://air-quality-api.open-meteo.com/v1/air-quality`
 - Valfri bakgrund via Pexels (se `js/backgroundService.js`)
 
-Notera: Pexels kräver en API-nyckel. I `js/backgroundService.js` finns en variabel `PEXELS_API_KEY` — byt ut eller konfigurera den på ett säkert sätt i produktionsprojekt.
-
----
 
 ## Projektstruktur (kort)
 
@@ -95,16 +113,3 @@ Notera: Pexels kräver en API-nyckel. I `js/backgroundService.js` finns en varia
 - Grundläggande ARIA-användning i sökfält, dynamiska uppdateringar använder `aria-live` där det är lämpligt.
 - Enkla enhetstester finns; fler tester rekommenderas för kritisk logik.
 
----
-
-## Kända detaljer / tips ⚠️
-
-- Enkel rate-limit i `js/utils/ApiFilter.js` (sparar tidsstämplar per URL). Kommentaren i filen säger 60s men koden använder 10s (10000 ms) — dubbelkolla om du vill strikt 60s.
-- Pexels-nyckeln är hårdkodad i `js/backgroundService.js` — byt ut eller använd miljövariabler i produktionsprojekt.
-
----
-
-## Bidra
-
-- Forka repot och öppna en PR med tydlig beskrivning.
-- För större ändringar: öppna först en issue för att diskutera förslag.
