@@ -3,7 +3,6 @@ import { fetchForecastByCoords } from "./js/7dayforecast/7dayforecast.js";
 import { forecast } from "./js/7dayforecast/forecastView.js";
 import { addToHistory, displayHistory } from "./js/searchHistory.js";
 import { removeHistory } from "./js/clearHistory.js";
-import { toTime } from "./js/utils/toTime.js";
 import { initDarkMode } from "./js/darkmode/darkmode.js";
 import { App } from "./js/Hourlyforecast/app.js";
 import { updateWeatherCards } from "./js/weatherCards.js";
@@ -16,14 +15,15 @@ import { setBackgroundFromWeatherCode } from "./js/backgroundService.js";
 
 const displayCity = document.getElementById("location");
 const displayTemp = document.getElementById("mainTemp");
-const displayHumid = document.getElementById("humidity");
-const displayWindSpeed = document.getElementById("windSpeed");
 const mainWeatherIcon = document.getElementById("mainWeatherIcon");
 const forecastContainer = document.querySelector(".center-column");
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
-const displaySunrise = document.getElementById("sunrise");
-const displaySunset = document.getElementById("sunset");
+
+console.log("displayCity:", displayCity);
+console.log("displayTemp:", displayTemp);
+console.log("mainWeatherIcon:", mainWeatherIcon);
+console.log("forecastContainer:", forecastContainer);
 
 let currentCity = "";
 const hourlyApp = new App();
@@ -34,8 +34,8 @@ function initMap(lat, lon, cityName) {
     map.remove();
   }
 
-  map = L.map('map').setView([lat, lon], 10);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  map = L.map("map").setView([lat, lon], 10);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
   L.marker([lat, lon]).addTo(map).bindPopup(cityName).openPopup();
 }
 
@@ -73,13 +73,19 @@ export async function loadWeatherForCity(cityName, countryName) {
 
     hourlyApp.render(conditions, sunrise, sunset);
     initMap(city.lat, city.lon, `${city.city}, ${city.country}`);
-
     displayCity.textContent = `${city.city}, ${city.country}`;
     displayTemp.textContent = `${Math.round(conditions.temp)}°C`;
-    displayHumid.textContent = `${Math.round(conditions.humidity)}%`;
-    displayWindSpeed.textContent = `${Math.round(conditions.windSpeed)} km/h`;
-    displaySunrise.textContent = toTime(sunrise);
-    displaySunset.textContent = toTime(sunset);
+
+    updateWeatherCards({
+      humidity: conditions.humidity,
+      uvIndex: conditions.uvIndex || 4,
+      rain: conditions.rain || 0,
+      windSpeed: conditions.windSpeed,
+    });
+
+    const detailsData = await buildDetailsData(conditions, dailyData, city);
+    console.log(detailsData);
+    updateDetailsGrid(detailsData);
 
     const iconClass = conditions.icon ?? "fa-sun";
     const iconLabel = conditions.iconLabel ?? "Current weather";
@@ -98,22 +104,26 @@ export async function loadWeatherForCity(cityName, countryName) {
     forecastContainer.innerHTML = "";
     forecastContainer.appendChild(forecastElement);
 
-    addToHistory(city.city);
+    addToHistory(`${city.city}, ${city.country}`);
     displayHistory(loadWeatherForCity);
 
     cityInput.value = "";
   } catch (err) {
-    console.error("Could not fetch data", err.message);
-    alert("Could not find city. Please try again.");
+    console.error("Could not fetch data", err);
+    if (err && err.stack) {
+      console.error(err.stack);
+    }
+
+    showError("Failed to load weather data.");
   }
 }
 
-// Initialize display history on page load
 displayHistory(loadWeatherForCity);
 removeHistory();
 initDarkMode();
 
-// Search button click event
+initCitySuggestions("searchInput", "citySuggestions"); // city suggestion droppdown..
+
 btn.addEventListener("click", async () => {
   const input = cityInput.value.trim();
   if (input) {
@@ -122,16 +132,16 @@ btn.addEventListener("click", async () => {
   }
 });
 
-
 cityInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     btn.click();
   }
 });
 
-
 let intervalId = setInterval(async () => {
   if (currentCity) {
     await loadWeatherForCity(currentCity);
   }
-}, 15 * 60 * 1000); 
+}, 15 * 60 * 1000);
+
+

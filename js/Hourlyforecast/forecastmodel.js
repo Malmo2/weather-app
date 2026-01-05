@@ -14,6 +14,7 @@ export class Forecastmodel {
     static getNextHours(get, count = 11) {
         const times = get.hourly.time;
         const temps = get.hourly.temperature_2m;
+        const codes = get.hourly.weather_code ?? [];
 
         const now = Date.now()
         const result = [];
@@ -25,7 +26,9 @@ export class Forecastmodel {
                 const { icon, label } = getWeatherIcon(code);
                 result.push({
                     date: d,
-                    temp: temps[i]
+                    temp: temps[i],
+                    icon,
+                    iconLabel: label
                 })
             }
         }
