@@ -20,10 +20,10 @@ const forecastContainer = document.querySelector(".center-column");
 const btn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("searchInput");
 
-console.log("displayCity:", displayCity);
-console.log("displayTemp:", displayTemp);
-console.log("mainWeatherIcon:", mainWeatherIcon);
-console.log("forecastContainer:", forecastContainer);
+// console.log("displayCity:", displayCity);
+// console.log("displayTemp:", displayTemp);
+// console.log("mainWeatherIcon:", mainWeatherIcon);
+// console.log("forecastContainer:", forecastContainer);
 
 let currentCity = "";
 const hourlyApp = new App();

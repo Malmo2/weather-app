@@ -2,7 +2,7 @@
  * Stores timestamps of recent API calls per URL.
  * Used to prevent repeated requests to the same endpoint.
  */
-const apiLimitLog = {};
+const apiLimitLog = [];
 
 /**
  * Time window (in milliseconds) during which repeated calls to the same API URL are blocked.

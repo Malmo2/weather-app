@@ -1,4 +1,4 @@
-import { checkApiLimit } from "./utils/ApiFilter.js";
+import { checkApiLimit } from "./utils/apiFilter.js";
 
 export async function getCity(cityName, countryName) {
     try {

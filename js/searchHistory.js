@@ -37,7 +37,7 @@ export function addToHistory(city) {
     }
 
     saveHistory(history);
-    console.log("Current history:", history);
+    // console.log("Current history:", history);
   } catch (error) {
     console.error("Couldn't add to history:", error.message);
   }
@@ -58,8 +58,8 @@ export function removeFromHistory(cityToRemove) {
 
     saveHistory(history);
 
-    console.log("Removed from history:", cityToRemove);
-    console.log("Updated history:", history);
+    // console.log("Removed from history:", cityToRemove);
+    // console.log("Updated history:", history);
 
     return true;
   } catch (error) {
@@ -99,8 +99,8 @@ export function displayHistory(onCityClick) {
     return;
   }
 
-  console.log("container:", historyContainer);
-  console.log("history:", history);
+  // console.log("container:", historyContainer);
+  // console.log("history:", history);
 
   const header = document.createElement("h3");
   header.textContent = "Recent Searches:";
@@ -141,6 +141,4 @@ export function displayHistory(onCityClick) {
     itemWrapper.appendChild(removeBtn);
     historyContainer.appendChild(itemWrapper);
   });
-
-  console.log("HTML skapad!");
 }
