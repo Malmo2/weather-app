@@ -1,6 +1,6 @@
-// Function to update weather cards with new data
 import { showError } from "./utils/errorHandling.js";
 
+// Function to update weather cards with new data
 export function updateWeatherCards(weatherData) {
     const humidityElement = document.querySelector(".humidity-value");
     const uvElement = document.querySelector(".uv-value");

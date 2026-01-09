@@ -1,4 +1,4 @@
-import { loadWeatherForCity } from "../../maintest.js";
+import { loadWeatherForCity } from "../../main.js";
 
 /**
  * Initializes city search suggestions using the Open-Meteo Geocoding API.

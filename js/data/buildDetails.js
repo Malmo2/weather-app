@@ -54,6 +54,7 @@ import { airQualityData } from "../classes/airQualityData.js";
 
 
 export async function buildDetailsData(conditions, dailyData, city) {
+
     let feels = { currentFeelsLike: conditions.feelsLike ?? conditions.temp ?? 0 };
 
     let pressureVisibility = {
@@ -64,17 +65,17 @@ export async function buildDetailsData(conditions, dailyData, city) {
 
     let airQuality = { pm10: 0, pm25: 0 };
 
-    // If the main weather call already provided a "feels like" value, don't make an extra request.
+
     if (typeof conditions.feelsLike !== "number") {
         try {
-            // Use the selected city coordinates.
+
             feels = await feelsLikeData(city.lat, city.lon);
-        } catch (e) {
-            console.error("feelsLikeData failed", e);
+        } catch (err) {
+            console.error("feelsLikeData failed", err);
         }
     }
 
-    // Same idea for pressure/visibility/dew point: only fetch if missing.
+
     if (
         typeof conditions.pressure !== "number" ||
         typeof conditions.visibilityKm !== "number" ||
@@ -82,15 +83,15 @@ export async function buildDetailsData(conditions, dailyData, city) {
     ) {
         try {
             pressureVisibility = await pressureVisibilityData(city.lat, city.lon);
-        } catch (e) {
-            console.error("pressureVisibilityData failed", e);
+        } catch (err) {
+            console.error("pressureVisibilityData failed", err);
         }
     }
 
     try {
         airQuality = await airQualityData(city.lat, city.lon);
-    } catch (e) {
-        console.error("airQualityData failed", e);
+    } catch (err) {
+        console.error("airQualityData failed", err);
     }
 
     const baseTemp = conditions.temp ?? feels.currentFeelsLike ?? 0;

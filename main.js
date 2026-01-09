@@ -65,7 +65,7 @@ export async function loadWeatherForCity(cityName, countryName) {
     //! if API raches limit, It would safely exit without crashing UI 
     const forecastData = await fetchForecastByCoords(city.lat, city.lon);
     if (!forecastData) {
-      showError("API request limit reahced, Please wait a moment....");
+      showError("API request limit reached, Please wait a moment....");
       return;
     }
 
@@ -84,7 +84,7 @@ export async function loadWeatherForCity(cityName, countryName) {
     });
 
     const detailsData = await buildDetailsData(conditions, dailyData, city);
-    console.log(detailsData);
+    // console.log(detailsData);
     updateDetailsGrid(detailsData);
 
     const iconClass = conditions.icon ?? "fa-sun";
@@ -137,6 +137,7 @@ cityInput.addEventListener("keydown", (e) => {
     btn.click();
   }
 });
+
 
 let intervalId = setInterval(async () => {
   if (currentCity) {

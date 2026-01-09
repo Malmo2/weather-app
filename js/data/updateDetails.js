@@ -23,6 +23,8 @@ const airQualityValue = document.querySelector('.air-quality-card .card-value');
 const airQualityText = document.querySelector('.air-quality-card .card-subtext');
 const airQualityDetailsBtn = document.querySelector('.air-quality-card .details-btn');
 
+const avgDeltaText = document.querySelector('.average-card .card-subtext');
+
 /**
  * @typedef {Object} DetailsGridData
  * @property {number} avgDelta - Difference between today's average and normal average temperature
@@ -48,9 +50,20 @@ const airQualityDetailsBtn = document.querySelector('.air-quality-card .details-
  *
  * @param {DetailsGridData} data - Weather data used to populate the details cards
  */
+
 export function updateDetailsGrid(data) {
     const delta = data.avgDelta;
     avgDelta.textContent = `${delta > 0 ? "+" : ""}${delta}°`;
+
+    if (avgDeltaText) {
+        avgDeltaText.textContent =
+            delta > 0
+                ? "Above the average temperature."
+                : delta < 0
+                    ? "Below the average temperature."
+                    : "Same as the average temperature.";
+    }
+
     avgToday.textContent = `T:${data.todayAvg}°`;
     avgAverage.textContent = `T:${data.normalAvg}°`;
 
@@ -71,5 +84,5 @@ export function updateDetailsGrid(data) {
     pressureUnit.textContent = data.pressureUnit;
 
     airQualityValue.textContent = data.airQualityStatus;
-    airQualityText.textContent = data.airQualityDescription;
+    airQualityText.textContent = data.airQualityDescription ?? "";
 }

@@ -39,6 +39,7 @@ export async function getCity(cityName, countryName) {
 }
 
 
+
 export async function getWeather(lat, lon) {
     // We request extra "current" variables so the UI can show details without extra API calls.
     const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,wind_speed_10m,surface_pressure,visibility,weather_code,precipitation,rain,showers,snowfall&hourly=temperature_2m,apparent_temperature,precipitation,weather_code&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset,uv_index_max&timezone=auto`;
