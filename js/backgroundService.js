@@ -8,7 +8,6 @@
  * @property {string[]} thunder
  * @property {string[]} snow
  * @property {string[]} cloudy
- * @property {string[]} hail
  * @property {string[]} fallback
  *
  * Groups correspond to a simplified weather grouping the UI uses for visuals.
@@ -21,15 +20,14 @@
  * @type {BackgroundMediaMap}
  */
 const LOCAL_VIDEO_BY_GROUP = {
-  sun: ["constants/backgrounds/sun/sun.mp4"],
-  clear: ["constants/backgrounds/clear/clear.mp4"],
-  rain: ["constants/backgrounds/rain/rain.mp4"],
-  fog: ["constants/backgrounds/fog/fog.mp4"],
-  thunder: ["constants/backgrounds/thunder/thunder.mp4"],
-  snow: ["constants/backgrounds/snow/snow.mp4"],
-  cloudy: ["constants/backgrounds/cloudy/cloudy.mp4"],
-  hail: ["constants/backgrounds/hail/hail.mp4"],
-  fallback: ["constants/backgrounds/fallback/fallback.mp4"],
+  sun: ["/constants/backgrounds/sun/sun.mp4"],
+  clear: ["/constants/backgrounds/clear/clear.mp4"],
+  rain: ["/constants/backgrounds/rain/rain.mp4"],
+  fog: ["/constants/backgrounds/fog/fog.mp4"],
+  thunder: ["/constants/backgrounds/thunder/thunder.mp4"],
+  snow: ["/constants/backgrounds/snow/snow.mp4"],
+  cloudy: ["/constants/backgrounds/cloudy/cloudy.mp4"],
+  fallback: ["/constants/backgrounds/fallback/fallback.mp4"],
 };
 
 /**
@@ -37,33 +35,14 @@ const LOCAL_VIDEO_BY_GROUP = {
  * @type {BackgroundMediaMap}
  */
 const LOCAL_WEBP_BY_GROUP = {
-  sun: [
-    "constants/backgrounds/sun/sun.webp",
-  ],
-  clear: [
-    "constants/backgrounds/clear/clear.webp",
-  ],
-  rain: [
-    "constants/backgrounds/rain/rain.webp",
-  ],
-  fog: [
-    "constants/backgrounds/fog/fog.webp",
-  ],
-  thunder: [
-    "constants/backgrounds/thunder/thunder.webp",
-  ],
-  snow: [
-    "constants/backgrounds/snow/snow.webp",
-  ],
-  cloudy: [
-    "constants/backgrounds/cloudy/cloudy.webp",
-  ],
-  hail: [
-    "constants/backgrounds/hail/hail.webp",
-  ],
-  fallback: [
-    "constants/backgrounds/fallback/fallback.webp",
-  ],
+  sun: ["/constants/backgrounds/sun/sun.webp"],
+  clear: ["/constants/backgrounds/clear/clear.webp"],
+  rain: ["/constants/backgrounds/rain/rain.webp"],
+  fog: ["/constants/backgrounds/fog/fog.webp"],
+  thunder: ["/constants/backgrounds/thunder/thunder.webp"],
+  snow: ["/constants/backgrounds/snow/snow.webp"],
+  cloudy: ["/constants/backgrounds/cloudy/cloudy.webp"],
+  fallback: ["/constants/backgrounds/fallback/fallback.webp"],
 };
 
 let backgroundVideoEl = null;
@@ -122,16 +101,23 @@ function setBodyImage(imageUrl) {
   document.body.style.backgroundSize = "cover";
   document.body.style.backgroundPosition = "center";
   document.body.style.backgroundRepeat = "no-repeat";
-  document.body.style.backgroundAttachment = "fixed";
   document.body.style.transition = "background-image 0.5s ease-in-out";
 }
 
 function setBodyVideo(videoUrl, fallbackImageUrl) {
   document.body.style.backgroundImage = "none";
   const video = ensureBackgroundVideoElement();
+  const applyFallbackImage = () => {
+    if (fallbackImageUrl) {
+      setBodyImage(fallbackImageUrl);
+    } else {
+      clearBackgroundVideo();
+    }
+  };
 
   // If the current source differs, swap it and reload.
-  if (video.src !== videoUrl) {
+  const currentSrcAttr = video.getAttribute("src");
+  if (currentSrcAttr !== videoUrl) {
     video.onerror = null;
     video.onstalled = null;
     video.src = videoUrl;
@@ -139,31 +125,32 @@ function setBodyVideo(videoUrl, fallbackImageUrl) {
   }
 
   if (fallbackImageUrl) {
-    video.onerror = () => {
-      console.warn("Background video failed to load; falling back to image.");
-      setBodyImage(fallbackImageUrl);
-    };
-    video.onstalled = () => {
-      console.warn("Background video stalled; falling back to image.");
-      setBodyImage(fallbackImageUrl);
-    };
+    video.onerror = applyFallbackImage;
+    video.onstalled = applyFallbackImage;
+  }
+  else {
+    video.onerror = null;
+    video.onstalled = null;
   }
   video
     .play()
     .catch(() => {
-      // Autoplay might fail; caller already cleared image so just log quietly.
-      console.warn("Background video autoplay blocked; consider user interaction.");
+      console.warn("Background video autoplay blocked; falling back to image.");
+      applyFallbackImage();
     });
 }
 
 /**
  * Maps Open-Meteo weather codes to a high-level condition group.
- * Groups are kept small so you can easily assign your own Pexels media.
+ * Groups are kept small so you can easily assign media.
  * @param {number|string} code - WMO weather code from the API.
- * @returns {"sun"|"clear"|"rain"|"fog"|"thunder"|"snow"|"cloudy"} Group name.
+ * @returns {"sun"|"clear"|"rain"|"fog"|"thunder"|"snow"|"cloudy"|"fallback"} Group name.
  */
 export function mapWeatherCodeToConditionGroup(code) {
   const numericCode = Number(code);
+  if (Number.isNaN(numericCode)) {
+    return "fallback";
+  }
   switch (numericCode) {
     case 0:
       return "sun";
@@ -207,13 +194,13 @@ export function mapWeatherCodeToConditionGroup(code) {
 /**
  * Sets background using local media mapped from weather code.
  * @param {number} weatherCode - The WMO weather code.
- * @returns {Promise<void>} Resolves after the media is applied.
+ * @returns {void}
  *
  * Picks a video first (looped, muted, full-viewport). If the video fails
- * to load or stalls, the corresponding WEBP fallback is applied. If neither
- * is found, the existing background is cleared.
+ * to load, stalls, or autoplay is blocked, the corresponding WEBP fallback
+ * is applied. If neither is found, the existing background is cleared.
  */
-export async function setBackgroundFromWeatherCode(weatherCode) {
+export function setBackgroundFromWeatherCode(weatherCode) {
   const group = mapWeatherCodeToConditionGroup(weatherCode);
   const localVideo = getLocalVideoForGroup(group) || getLocalVideoForGroup("fallback");
   const localWebp = getLocalWebpForGroup(group) || getLocalWebpForGroup("fallback");
